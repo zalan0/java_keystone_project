@@ -1,0 +1,4 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<session version="1.0">
+<refactoring comment="Rename type &apos;Graph.MyVertex&apos; to &apos;Vertex&apos;&#x0D;&#x0A;- Original project: &apos;Communities&apos;&#x0D;&#x0A;- Original element: &apos;Graph.MyVertex&apos;&#x0D;&#x0A;- Renamed element: &apos;Graph.Vertex&apos;&#x0D;&#x0A;- Update references to refactored element&#x0D;&#x0A;- Update textual occurrences in comments and strings" description="Rename type &apos;MyVertex&apos;" flags="589830" id="org.eclipse.jdt.ui.rename.type" input="/src&lt;Graph{MyVertex.java[MyVertex" matchStrategy="1" name="Vertex" qualified="false" references="true" similarDeclarations="false" stamp="1459955527594" textual="false" version="1.0"/>
+</session>
