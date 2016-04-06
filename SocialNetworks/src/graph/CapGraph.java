@@ -21,15 +21,15 @@ import sun.security.provider.certpath.Vertex;
  *
  */
 public class CapGraph implements Graph {
-	private HashSet<Vertex> vertices;
+	private HashSet<Integer> vertices;
 	private HashMap<Integer, HashSet<Integer>> edges;
 	private PApplet parent;  // director to visualizer
 	
 	/**
 	 * Constructor that sets up an empty graph.
 	 */
-	public CapGraph(PApplet parent) {
-		vertices = new HashSet<Vertex>();
+	public CapGraph() {
+		vertices = new HashSet<Integer>();
 		edges = new HashMap<Integer, HashSet<Integer>>();
 		this.parent = parent;
 	}
@@ -39,22 +39,22 @@ public class CapGraph implements Graph {
 	 */
 	@Override
 	public void addVertex(int num) {
-		Vertex v = new Vertex(num, parent);
-		vertices.add(v);
+		vertices.add(num);
 		edges.put(num, new HashSet<Integer>());
 	}
-	
+
 	/**
 	 * Takes a set of vertices and adds them to the graph all at once.
 	 * @param vertices2 A HashSet of Integers representing vertices.
 	 */
-	public void addVertices(HashSet<Vertex> vertices2) {
+	public void addVertices(HashSet<Integer> vertices2) {
 		Iterator<Integer> i = vertices2.iterator();
 		while(i.hasNext()) {
 			int vertex = i.next();
 			addVertex(vertex);
 		}
 	}
+
 
 	/* (non-Javadoc)
 	 * @see graph.Graph#addEdge(int, int)
@@ -72,7 +72,7 @@ public class CapGraph implements Graph {
 	@Override
 	public Graph getEgonet(int center) {
 		// create a new graph with vertices of center and neighbors
-		CapGraph egonet = new CapGraph(parent);
+		CapGraph egonet = new CapGraph();
 		egonet.addVertex(center);
 		egonet.addVertices(edges.get(center));
 		
@@ -140,7 +140,7 @@ public class CapGraph implements Graph {
 			if(!visited.contains(vertex)){
 				HashSet<Integer> newVertices = new HashSet<Integer>();
 				DFS_Visit(transGraph, vertex, visited, finished, newVertices);
-				CapGraph newGraph = new CapGraph(parent);
+				CapGraph newGraph = new CapGraph();
 				newGraph.addVertices(newVertices);
 				subGraphEdges(newGraph);
 				ret.add(newGraph);
@@ -154,7 +154,7 @@ public class CapGraph implements Graph {
 	 * @return A graph with all of the directed edges backwards.
 	 */
 	private CapGraph transposeGraph() {
-		CapGraph newGraph = new CapGraph(parent);
+		CapGraph newGraph = new CapGraph();
 		newGraph.addVertices(vertices);
 		Iterator<Integer> vertIter = newGraph.getVertices().iterator();
 		while(vertIter.hasNext()) {
@@ -217,11 +217,11 @@ public class CapGraph implements Graph {
 	 * A helper method to change the set of vertices into a Stack.  
 	 * @return A Stack of vertices.
 	 */
-	private Stack<Vertex> getVertexStack() {
-		Stack<Vertex> vertexStack = new Stack<Vertex>();
-		Iterator<Vertex> i = vertices.iterator();
+	private Stack<Integer> getVertexStack() {
+		Stack<Integer> vertexStack = new Stack<Integer>();
+		Iterator<Integer> i = vertices.iterator();
 		while(i.hasNext()) {
-			Vertex v = i.next();
+			Integer v = i.next();
 			vertexStack.add(v);
 		}
 		return vertexStack;
@@ -231,7 +231,7 @@ public class CapGraph implements Graph {
 	 * Getter for vertices in graph
 	 * @return HashSet of vertices
 	 */
-	public HashSet<Vertex> getVertices() {
+	public HashSet<Integer> getVertices() {
 		return vertices;
 	}
 
@@ -259,10 +259,10 @@ public class CapGraph implements Graph {
 		System.out.println("-------------------");
 		System.out.println("Printing graph...");
 		System.out.println("Vertex=>[Neighbors]");
-		Iterator<Vertex> i = vertices.iterator();
+		Iterator<Integer> i = vertices.iterator();
 		while(i.hasNext()) {
-			Vertex vertex = i.next();
-			System.out.println(vertex.name() + "=>" + edges.get(vertex.name()));
+			Integer vertex = i.next();
+			System.out.println(vertex + "=>" + edges.get(vertex));
 		}
 		System.out.println("-------------------");
 	}

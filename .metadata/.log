@@ -67,3 +67,141 @@ This warning can be switched off on the Team > Git > Confirmations and Warnings 
 
 !ENTRY org.eclipse.equinox.ds 1 0 2016-04-05 20:56:13.881
 !MESSAGE Could not bind a reference of component org.eclipse.fx.ide.css.cssext.ui.internal.DefaultCssExtProvider. The reference is: Reference[name = ICSSExtModelProvider, interface = org.eclipse.fx.ide.css.cssext.ICSSExtModelProvider, policy = dynamic, cardinality = 0..n, target = null, bind = bindCssExtensionModelProvider, unbind = unbindCssExtensionModelProvider]
+!SESSION 2016-04-06 06:08:18.106 -----------------------------------------------
+eclipse.buildId=4.5.0.I20150603-2000
+java.version=1.8.0_77
+java.vendor=Oracle Corporation
+BootLoader constants: OS=win32, ARCH=x86_64, WS=win32, NL=en_US
+Framework arguments:  -product org.eclipse.epp.package.java.product
+Command-line arguments:  -os win32 -ws win32 -arch x86_64 -product org.eclipse.epp.package.java.product
+
+!ENTRY org.eclipse.jface 2 0 2016-04-06 06:08:34.870
+!MESSAGE Keybinding conflicts occurred.  They may interfere with normal accelerator operation.
+!SUBENTRY 1 org.eclipse.jface 2 0 2016-04-06 06:08:34.870
+!MESSAGE A conflict occurred for CTRL+SHIFT+D:
+Binding(CTRL+SHIFT+D,
+	ParameterizedCommand(Command(org.eclipse.jdt.debug.ui.commands.Display,Display,
+		Display result of evaluating selected text,
+		Category(org.eclipse.debug.ui.category.run,Run/Debug,Run/Debug command category,true),
+		org.eclipse.ui.internal.WorkbenchHandlerServiceHandler@60cc20e1,
+		,,true),null),
+	org.eclipse.ui.defaultAcceleratorConfiguration,
+	org.eclipse.ui.contexts.dialogAndWindow,,,system)
+Binding(CTRL+SHIFT+D,
+	ParameterizedCommand(Command(com.aptana.ide.syncing.ui.commands.download,Download...,
+		,
+		Category(com.aptana.ide.syncing.ui.commands.category,File Transfer,File Transfer Commands,true),
+		org.eclipse.ui.internal.WorkbenchHandlerServiceHandler@25109d84,
+		,,true),null),
+	org.eclipse.ui.defaultAcceleratorConfiguration,
+	org.eclipse.ui.contexts.window,,,system)
+Binding(CTRL+SHIFT+D,
+	ParameterizedCommand(Command(org.radrails.rails.ui.command.debug.server,Debug Server,
+		,
+		Category(org.radrails.rails.ui.category,Rails,null,true),
+		org.eclipse.ui.internal.WorkbenchHandlerServiceHandler@4a1934e2,
+		,,true),null),
+	org.eclipse.ui.defaultAcceleratorConfiguration,
+	org.eclipse.ui.contexts.window,,,system)
+!SUBENTRY 1 org.eclipse.jface 2 0 2016-04-06 06:08:34.870
+!MESSAGE A conflict occurred for CTRL+SHIFT+U:
+Binding(CTRL+SHIFT+U,
+	ParameterizedCommand(Command(org.eclipse.jdt.ui.edit.text.java.search.occurrences.in.file.quickMenu,Show Occurrences in File Quick Menu,
+		Shows the Occurrences in File quick menu,
+		Category(org.eclipse.search.ui.category.search,Search,Search command category,true),
+		org.eclipse.ui.internal.WorkbenchHandlerServiceHandler@6963b0bd,
+		,,true),null),
+	org.eclipse.ui.defaultAcceleratorConfiguration,
+	org.eclipse.ui.contexts.window,,,system)
+Binding(CTRL+SHIFT+U,
+	ParameterizedCommand(Command(com.aptana.ide.syncing.ui.commands.upload,Upload...,
+		,
+		Category(com.aptana.ide.syncing.ui.commands.category,File Transfer,File Transfer Commands,true),
+		org.eclipse.ui.internal.WorkbenchHandlerServiceHandler@68a94e58,
+		,,true),null),
+	org.eclipse.ui.defaultAcceleratorConfiguration,
+	org.eclipse.ui.contexts.window,,,system)
+
+!ENTRY org.eclipse.ui 2 0 2016-04-06 06:08:39.313
+!MESSAGE The 'org.eclipse.ui.startup' extension from 'com.objectaid.uml' does not provide a 'class' attribute.
+This usage is deprecated and a 'class' attribute should be provided.
+The release after Mars (4.5) will no longer support the deprecated usage!
+
+!ENTRY org.eclipse.egit.ui 2 0 2016-04-06 06:08:40.228
+!MESSAGE Warning: The environment variable HOME is not set. The following directory will be used to store the Git
+user global configuration and to define the default location to store repositories: 'C:\Users\zalan0'. If this is
+not correct please set the HOME environment variable and restart Eclipse. Otherwise Git for Windows and
+EGit might behave differently since they see different configuration options.
+This warning can be switched off on the Team > Git > Confirmations and Warnings preference page.
+
+!ENTRY org.eclipse.equinox.ds 1 0 2016-04-06 06:10:01.073
+!MESSAGE Could not bind a reference of component org.eclipse.fx.ide.css.cssext.ui.internal.DefaultCssExtProvider. The reference is: Reference[name = ICSSExtModelProvider, interface = org.eclipse.fx.ide.css.cssext.ICSSExtModelProvider, policy = dynamic, cardinality = 0..n, target = null, bind = bindCssExtensionModelProvider, unbind = unbindCssExtensionModelProvider]
+!SESSION 2016-04-06 09:50:06.940 -----------------------------------------------
+eclipse.buildId=4.5.0.I20150603-2000
+java.version=1.8.0_77
+java.vendor=Oracle Corporation
+BootLoader constants: OS=win32, ARCH=x86_64, WS=win32, NL=en_US
+Framework arguments:  -product org.eclipse.epp.package.java.product
+Command-line arguments:  -os win32 -ws win32 -arch x86_64 -product org.eclipse.epp.package.java.product
+
+!ENTRY org.eclipse.jface 2 0 2016-04-06 09:50:11.401
+!MESSAGE Keybinding conflicts occurred.  They may interfere with normal accelerator operation.
+!SUBENTRY 1 org.eclipse.jface 2 0 2016-04-06 09:50:11.401
+!MESSAGE A conflict occurred for CTRL+SHIFT+U:
+Binding(CTRL+SHIFT+U,
+	ParameterizedCommand(Command(org.eclipse.jdt.ui.edit.text.java.search.occurrences.in.file.quickMenu,Show Occurrences in File Quick Menu,
+		Shows the Occurrences in File quick menu,
+		Category(org.eclipse.search.ui.category.search,Search,Search command category,true),
+		org.eclipse.ui.internal.WorkbenchHandlerServiceHandler@4a1934e2,
+		,,true),null),
+	org.eclipse.ui.defaultAcceleratorConfiguration,
+	org.eclipse.ui.contexts.window,,,system)
+Binding(CTRL+SHIFT+U,
+	ParameterizedCommand(Command(com.aptana.ide.syncing.ui.commands.upload,Upload...,
+		,
+		Category(com.aptana.ide.syncing.ui.commands.category,File Transfer,File Transfer Commands,true),
+		org.eclipse.ui.internal.WorkbenchHandlerServiceHandler@6963b0bd,
+		,,true),null),
+	org.eclipse.ui.defaultAcceleratorConfiguration,
+	org.eclipse.ui.contexts.window,,,system)
+!SUBENTRY 1 org.eclipse.jface 2 0 2016-04-06 09:50:11.401
+!MESSAGE A conflict occurred for CTRL+SHIFT+D:
+Binding(CTRL+SHIFT+D,
+	ParameterizedCommand(Command(org.eclipse.jdt.debug.ui.commands.Display,Display,
+		Display result of evaluating selected text,
+		Category(org.eclipse.debug.ui.category.run,Run/Debug,Run/Debug command category,true),
+		org.eclipse.ui.internal.WorkbenchHandlerServiceHandler@68a94e58,
+		,,true),null),
+	org.eclipse.ui.defaultAcceleratorConfiguration,
+	org.eclipse.ui.contexts.dialogAndWindow,,,system)
+Binding(CTRL+SHIFT+D,
+	ParameterizedCommand(Command(com.aptana.ide.syncing.ui.commands.download,Download...,
+		,
+		Category(com.aptana.ide.syncing.ui.commands.category,File Transfer,File Transfer Commands,true),
+		org.eclipse.ui.internal.WorkbenchHandlerServiceHandler@49741274,
+		,,true),null),
+	org.eclipse.ui.defaultAcceleratorConfiguration,
+	org.eclipse.ui.contexts.window,,,system)
+Binding(CTRL+SHIFT+D,
+	ParameterizedCommand(Command(org.radrails.rails.ui.command.debug.server,Debug Server,
+		,
+		Category(org.radrails.rails.ui.category,Rails,null,true),
+		org.eclipse.ui.internal.WorkbenchHandlerServiceHandler@4a49919c,
+		,,true),null),
+	org.eclipse.ui.defaultAcceleratorConfiguration,
+	org.eclipse.ui.contexts.window,,,system)
+
+!ENTRY org.eclipse.ui 2 0 2016-04-06 09:50:14.764
+!MESSAGE The 'org.eclipse.ui.startup' extension from 'com.objectaid.uml' does not provide a 'class' attribute.
+This usage is deprecated and a 'class' attribute should be provided.
+The release after Mars (4.5) will no longer support the deprecated usage!
+
+!ENTRY org.eclipse.egit.ui 2 0 2016-04-06 09:50:16.589
+!MESSAGE Warning: The environment variable HOME is not set. The following directory will be used to store the Git
+user global configuration and to define the default location to store repositories: 'C:\Users\zalan0'. If this is
+not correct please set the HOME environment variable and restart Eclipse. Otherwise Git for Windows and
+EGit might behave differently since they see different configuration options.
+This warning can be switched off on the Team > Git > Confirmations and Warnings preference page.
+
+!ENTRY org.eclipse.equinox.ds 1 0 2016-04-06 09:50:17.990
+!MESSAGE Could not bind a reference of component org.eclipse.fx.ide.css.cssext.ui.internal.DefaultCssExtProvider. The reference is: Reference[name = ICSSExtModelProvider, interface = org.eclipse.fx.ide.css.cssext.ICSSExtModelProvider, policy = dynamic, cardinality = 0..n, target = null, bind = bindCssExtensionModelProvider, unbind = unbindCssExtensionModelProvider]
