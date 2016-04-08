@@ -18,4 +18,13 @@ public class Edge {
 	public Vertex getStart() {
 		return start;
 	}
+	
+	public String toString() {
+		String ret = start.name() + "->" + finish.name();
+		return ret;
+	}
+
+	public Vertex getFinish() {
+		return finish;
+	}
 }

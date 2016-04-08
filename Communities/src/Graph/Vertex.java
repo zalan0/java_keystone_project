@@ -16,6 +16,7 @@ public class Vertex {
 	public Vertex(int name, PApplet parent) {
 		this.name = name;
 		this.parent = parent;
+		edges = new HashSet<Edge>();
 		positionX = parent.random(parent.height);
 		positionY = parent.random(parent.width);
 	}
@@ -36,13 +37,29 @@ public class Vertex {
 		edges.add(e);
 	}
 	
-	public ArrayList<Vertex> getNeighbors() {
-		ArrayList<Vertex> ret = new ArrayList<Vertex>();
-		Iterator<Edge> i = edges.iterator();
-		while(i.hasNext()) {
-			Edge e = i.next();
-			ret.add(e.getStart());
+	public Vertex[] getNeighbors() {
+		Vertex[] ret = new Vertex[edges.size()];
+		if(edges.size()>0) {
+			Iterator<Edge> i = edges.iterator();
+			int index = 0;
+			while(i.hasNext()) {
+				Edge e = i.next();
+				ret[index] = (e.getFinish());
+				index++;
+			}
 		}
+		return ret;
+	}
+	
+	public String printNeighbors() {
+		String ret = "[";
+		if(edges.size() > 0) {
+			for(Vertex v: this.getNeighbors()) {
+				ret += (v.name() + ", ");
+			}
+			ret = ret.substring(0, ret.length() - 2);
+		}
+		ret += "]";
 		return ret;
 	}
 }

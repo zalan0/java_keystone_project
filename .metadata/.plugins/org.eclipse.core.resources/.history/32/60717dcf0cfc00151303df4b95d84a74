@@ -1,0 +1,12 @@
+package Graph;
+
+import java.util.HashSet;
+
+import processing.core.PApplet;
+
+public class Graph {
+	private HashSet<Vertex> vertices;
+	private HashSet<Edge> edges;
+	PApplet parent;
+	
+}

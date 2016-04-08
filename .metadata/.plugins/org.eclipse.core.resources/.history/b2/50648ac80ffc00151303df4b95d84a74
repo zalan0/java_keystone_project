@@ -1,0 +1,27 @@
+package Graph;
+
+import java.util.HashSet;
+
+import processing.core.PApplet;
+
+public class Graph {
+	private HashSet<Vertex> vertices;
+	private HashSet<Edge> edges;
+	PApplet parent;
+	
+	public Graph(PApplet p) {
+		vertices = new HashSet<Vertex>();
+		edges = new HashSet<Edge>();
+		parent = p;
+	}
+	
+	public void addVertex(Vertex v) {
+		vertices.add(v);
+	}
+	
+	public void addEdge(Vertex start, Vertex finish) {
+		Edge e = new Edge(start, finish);
+		edges.add(e);
+		start.addEdge(e);
+	}
+}

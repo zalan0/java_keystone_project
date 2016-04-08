@@ -1,0 +1,40 @@
+package graph;
+
+import java.util.HashSet;
+import java.util.Iterator;
+
+import processing.core.PApplet;
+
+public class Graph {
+	private HashSet<Vertex> vertices;
+	private HashSet<Edge> edges;
+	PApplet parent;
+	
+	public Graph(PApplet p) {
+		vertices = new HashSet<Vertex>();
+		edges = new HashSet<Edge>();
+		parent = p;
+	}
+	
+	public void addVertex(Vertex v) {
+		vertices.add(v);
+	}
+	
+	public void addEdge(Vertex start, Vertex finish) {
+		Edge e = new Edge(start, finish);
+		edges.add(e);
+		start.addEdge(e);
+	}
+	
+	public void printGraph() {
+		System.out.println("-------------------");
+		System.out.println("Printing graph...");
+		System.out.println("Vertex=>[Neighbors]");
+		Iterator<Vertex> i = vertices.iterator();
+		while(i.hasNext()) {
+			Vertex vertex = i.next();
+			System.out.println(vertex.name() + "=>" + vertex.getNeighbors());
+		}
+		System.out.println("-------------------");
+	}
+}
