@@ -9,7 +9,7 @@ import processing.core.PApplet;
 public class Graph {
 	private HashMap<Integer, Vertex> vertices;
 	private HashSet<Edge> edges;
-	PApplet parent;
+	private PApplet parent;
 	
 	public Graph() {
 		vertices = new HashMap<Integer, Vertex>();
@@ -33,13 +33,21 @@ public class Graph {
 	}
 	
 	public void addEdge(Vertex start, Vertex finish) {
-		Edge e = new Edge(start, finish);
+		Edge e = new Edge(start, finish, parent);
 		edges.add(e);
 		start.addEdge(e);
 	}
 	
 	public Vertex getVertex(int name) {
 		return vertices.get(name);
+	}
+	
+	public PApplet getParent() {
+		return parent;
+	}
+	
+	public Iterator<Integer> getVerticeIterator() {
+		return vertices.keySet().iterator();
 	}
 	
 	public void printGraph() {

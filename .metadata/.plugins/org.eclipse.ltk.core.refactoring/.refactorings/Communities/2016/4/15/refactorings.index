@@ -5,3 +5,5 @@
 1460077229552	Delete elements
 1460077339394	Move files
 1460081227627	Rename local variable 'vertex'
+1460159009410	Rename field 'finish'
+1460159021909	Rename method 'getFinish'

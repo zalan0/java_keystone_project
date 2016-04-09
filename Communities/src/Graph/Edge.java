@@ -1,14 +1,18 @@
 package graph;
 
+import processing.core.PApplet;
+
 public class Edge {
 	private double weight;
 	private Vertex start;
-	private Vertex finish;
+	private Vertex end;
+	PApplet parent;
 	
-	public Edge(Vertex start, Vertex finish) {
+	public Edge(Vertex start, Vertex finish, PApplet parent) {
 		this.start = start;
-		this.finish = finish;
+		this.end = finish;
 		weight = 0;
+		this.parent = parent;
 	}
 	
 	public void incrementWeight() {
@@ -20,11 +24,15 @@ public class Edge {
 	}
 	
 	public String toString() {
-		String ret = start.name() + "->" + finish.name();
+		String ret = start.name() + "->" + end.name();
 		return ret;
 	}
 
-	public Vertex getFinish() {
-		return finish;
+	public Vertex getEnd() {
+		return end;
+	}
+	
+	public void draw() {
+		parent.line(start.x(), start.y(), end.x(), end.y());
 	}
 }
