@@ -1,6 +1,6 @@
 /**
  * @author UCSD MOOC development team
- * modified by zalan0
+ * modified by jnzastrow
  * 
  * Utility class to add vertices and edges to a graph
  *
@@ -13,7 +13,6 @@ import java.util.Scanner;
 import java.util.Set;
 
 import graph.Vertex;
-import processing.core.PApplet;
 
 public class GraphLoader {
 
@@ -21,7 +20,6 @@ public class GraphLoader {
      * Loads graph with data from a file.
      * The file should consist of lines with 2 integers each, corresponding
      * to a "from" vertex and a "to" vertex.
-	 * @param parent 
      */ 
     public static void loadGraph(graph.Graph g, String filename) {
         Set<Integer> seen = new HashSet<Integer>();
@@ -38,9 +36,12 @@ public class GraphLoader {
             int vName1 = sc.nextInt();
             int vName2 = sc.nextInt();
             
+            // here is the main modification
             Vertex v1;
             Vertex v2;
             
+            // as the vertices are created we need to pass along the PApplet
+            // Instantiation so that the vertices know about our drawing.
             if (!seen.contains(vName1)) {
             	v1 = new Vertex(vName1, g.getParent());
                 g.addVertex(v1);

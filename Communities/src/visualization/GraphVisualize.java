@@ -8,21 +8,40 @@ import graph.Vertex;
 import processing.core.PApplet;
 import util.GraphLoader;
 
+/**
+ * Runs the visualization of the graph.
+ * @author jnzastrow
+ *
+ * Extends PApplet.  Instantiates a graph and load that graph.  
+ */
 public class GraphVisualize extends PApplet{
 	
 	private Graph graph;
-	final static String graphFile = "data/small_test_graph.txt";
+	final static String graphFile = "data/small_test_graph.txt"; // graph to load
 	
+	/**
+	 * Main method to run the applet as an application.
+	 */
 	public static void main(String args[] ) {
 		PApplet.main(new String[] {"--present", "visualization.GraphVisualize"});
 		
 	}
 	
+	/**
+	 * Overrides settings method from PApplet
+	 * 
+	 * Sets size of canvas
+	 */
 	public void settings() {
 		fullScreen();
 //		size(600,600);
 	}
 	
+	/**
+	 * Overrides setup method from PApplet
+	 * 
+	 * Instantiates and loads the graph.
+	 */
 	public void setup() {
 		
 //		background(0);
@@ -41,11 +60,10 @@ public class GraphVisualize extends PApplet{
 //		}
 	}
 	
+	/**
+	 * draw method from PApplet that continually draws the graph.
+	 */
 	public void draw() {
-//		stroke(255);
-//		if(mousePressed) {
-//			line(mouseX, mouseY, pmouseX, pmouseY);
-//		}
 		background(128);
 		Iterator<Integer> i = graph.getVerticeIterator();
 		while(i.hasNext()) {
@@ -57,7 +75,7 @@ public class GraphVisualize extends PApplet{
 				Edge edge = e.next();
 				edge.draw();
 			}
-			v.update();
+			v.update(); // added to make the graph move!
 		}
 	}
 }
