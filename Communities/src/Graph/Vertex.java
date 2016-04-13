@@ -88,7 +88,7 @@ public class Vertex {
 			int index = 0;
 			while(i.hasNext()) {
 				Edge e = i.next();
-				ret[index] = (e.getEnd());
+				ret[index] = (e.getOther(this));
 				index++;
 			}
 		}

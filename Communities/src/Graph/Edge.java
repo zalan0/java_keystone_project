@@ -5,6 +5,9 @@
  */
 package graph;
 
+import java.util.HashSet;
+import java.util.Iterator;
+
 import processing.core.PApplet;
 
 /**
@@ -13,9 +16,10 @@ import processing.core.PApplet;
  */
 public class Edge {
 	private double weight;
-	private Vertex start;
-	private Vertex end;
+//	private Vertex start;
+//	private Vertex end;
 	PApplet parent;
+	HashSet<Vertex> ends;
 	
 	/**
 	 * Constructs an edge.
@@ -25,10 +29,13 @@ public class Edge {
 	 * @param parent PApplet that will draw the graph.
 	 */
 	public Edge(Vertex start, Vertex finish, PApplet parent) {
-		this.start = start;
-		this.end = finish;
+//		this.start = start;
+//		this.end = finish;
 		weight = 0;
 		this.parent = parent;
+		ends = new HashSet<Vertex>();
+		ends.add(start);
+		ends.add(finish);
 	}
 	
 	/**
@@ -38,34 +45,41 @@ public class Edge {
 		weight++;
 	}
 
-	/**
-	 * Gets the class variable start 
-	 * @return Vertex that starts this edge
-	 */
-	public Vertex getStart() {
-		return start;
-	}
+//	/**
+//	 * Gets the class variable start 
+//	 * @return Vertex that starts this edge
+//	 */
+//	public Vertex getStart() {
+//		return start;
+//	}
+//	
+//	/**
+//	 * Gets the class variable end
+//	 * @return Vertex that ends this edge
+//	 */
+//	public Vertex getEnd() {
+//		return end;
+//	}
+//	
+//	/**
+//	 * Gets the class variable weight
+//	 * @return Double that represents the weight of this edge
+//	 */
+//	public double getWeight() {
+//		return weight;
+//	}
 	
-	/**
-	 * Gets the class variable end
-	 * @return Vertex that ends this edge
-	 */
-	public Vertex getEnd() {
-		return end;
-	}
-	
-	/**
-	 * Gets the class variable weight
-	 * @return Double that represents the weight of this edge
-	 */
-	public double getWeight() {
-		return weight;
+	public HashSet<Vertex> getEnds() {
+		return ends;
 	}
 	
 	/**
 	 * Draws a line from the start Vertex to the end Vertex
 	 */
 	public void draw() {
+		Iterator<Vertex> e = ends.iterator();
+		Vertex start = e.next();
+		Vertex end = e.next();
 		parent.line(start.x(), start.y(), end.x(), end.y());
 	}	
 	
@@ -73,8 +87,28 @@ public class Edge {
 	 * A string representation of this edge
 	 */
 	public String toString() {
-		String ret = start.name() + "->" + end.name();
+		Iterator<Vertex> e = ends.iterator();
+		Vertex start = e.next();
+		Vertex end = e.next();
+		String ret = start.name() + " <-> " + end.name();
 		return ret;
+	}
+
+	/**
+	 * Return the Vertex that is on the other end of the provided vertex
+	 * 
+	 * @param vertex
+	 * @return The other vertex
+	 */
+	public Vertex getOther(Vertex vertex) {
+		Iterator<Vertex> e = ends.iterator();
+		Vertex start = e.next();
+		Vertex end = e.next();
+		if(vertex.equals(start)) {
+			return end;
+		} else {
+			return start;
+		}
 	}
 
 

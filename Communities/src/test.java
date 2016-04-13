@@ -1,14 +1,16 @@
+import java.util.HashMap;
 import java.util.HashSet;
 import java.util.Iterator;
 import java.util.Set;
 
 import graph.Edge;
 import graph.Graph;
+import graph.Graphs;
 import graph.Vertex;
 import util.GraphLoader;
 
 public class test {
-	static String filename = "data/facebook_1000.txt";
+	static String filename = "data/small_test_graph.txt";
 
 	public static void main(String[] args) {
 		// TODO Auto-generated method stub
@@ -57,6 +59,21 @@ public class test {
 		Set<Integer> vertNames = g.getVertices().keySet();
 		System.out.println(vertNames.size() + " nodes");
 		System.out.println(g.getEdges().size() + " edges");
+		
+//		g.printGraph();
+//		g.printEdges();
+		HashMap<Vertex, Vertex> parentMap = Graphs.BFS(g.getVertex(1), g.getVertex(5));
+		
+		Iterator<Vertex> i = parentMap.keySet().iterator();
+		while(i.hasNext()) {
+			Vertex key = i.next();
+			System.out.println(key.name() + ", " + parentMap.get(key).name());
+		}
+		
+//		parentMap.printGraph();
+//		System.out.println(parentMap.getVertices().keySet().size());
+//		System.out.println(parentMap.getEdges().size());
+		
 //		Iterator<Integer> i = vertNames.iterator();
 //		int step = 0;
 //		int check = i.next();

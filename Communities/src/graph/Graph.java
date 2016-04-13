@@ -1,5 +1,6 @@
 package graph;
 
+import java.util.Arrays;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.Iterator;
@@ -7,7 +8,7 @@ import java.util.Iterator;
 import processing.core.PApplet;
 
 /**
- * Represents a network graph.
+ * Represents a network graph with bidirectional edges.
  * @author jnzastrow
  * 
  * Stores a HashMap of vertices mapped to it's name. There are methods
@@ -15,16 +16,14 @@ import processing.core.PApplet;
  */
 public class Graph {
 	private HashMap<Integer, Vertex> vertices;
-	private HashSet<Edge> edges;
+	private HashMap<HashSet<Integer>, Edge> edges;
 	private PApplet parent;
 	
 	/**
 	 * Constructs a new empty graph.
 	 */
 	public Graph() {
-		vertices = new HashMap<Integer, Vertex>();
-		edges = new HashSet<Edge>();
-		parent = new PApplet();
+		this(new PApplet());
 	}
 	
 	/**
@@ -34,7 +33,7 @@ public class Graph {
 	 */
 	public Graph(PApplet p) {
 		vertices = new HashMap<Integer, Vertex>();
-		edges = new HashSet<Edge>();
+		edges = new HashMap<HashSet<Integer>, Edge>();
 		parent = p;
 	}
 	
@@ -65,8 +64,26 @@ public class Graph {
 	 * @param finish Vertex at end of edge
 	 */
 	public void addEdge(Vertex start, Vertex finish) {
-		Edge e = new Edge(start, finish, parent);
-		edges.add(e);
+		// add vertices start and/or finish if not in graph
+		if(!vertices.containsKey(start)) this.addVertex(start);
+		if(!vertices.containsKey(finish)) this.addVertex(finish);
+		
+		HashSet<Integer> edgeSet = 
+				new HashSet<Integer>(Arrays.asList(start.name(), finish.name()));
+		Edge e;
+		// if new edge
+		if(!edges.containsKey(edgeSet)) {
+			// create edge
+			e = new Edge(start, finish, parent);
+			
+			// add to class set edges
+			edges.put(edgeSet, e);
+			
+		} else {
+			// find edge
+			e = edges.get(edgeSet);
+		}
+		// add to set of edges in Vertex start
 		start.addEdge(e);
 	}
 	
@@ -104,7 +121,7 @@ public class Graph {
 	 * 
 	 * @return HashSet of edges
 	 */
-	public HashSet<Edge> getEdges() {
+	public HashMap<HashSet<Integer>, Edge> getEdges() {
 		return edges;
 	}
 	
@@ -137,7 +154,7 @@ public class Graph {
 	 */
 	public void printEdges() {
 		System.out.println("Edges");
-		Iterator<Edge> i = edges.iterator();
+		Iterator<Edge> i = edges.values().iterator();
 		while(i.hasNext()) {
 			Edge e = i.next();
 			System.out.println(e.toString());

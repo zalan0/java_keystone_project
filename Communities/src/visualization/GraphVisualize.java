@@ -17,7 +17,7 @@ import util.GraphLoader;
 public class GraphVisualize extends PApplet{
 	
 	private Graph graph;
-	final static String graphFile = "data/small_test_graph.txt"; // graph to load
+	final static String graphFile = "data/very_small_test.txt"; // graph to load
 	
 	/**
 	 * Main method to run the applet as an application.
