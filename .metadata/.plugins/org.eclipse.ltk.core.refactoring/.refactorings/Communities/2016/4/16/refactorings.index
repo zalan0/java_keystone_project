@@ -1,0 +1,4 @@
+1460766733745	Rename method 'loadGraph'
+1460767301168	Rename method 'loadEdgeFileGraph'
+1460768355113	Rename local variable 'sc'
+1460769508082	Extract method 'makeVerticesEdges'

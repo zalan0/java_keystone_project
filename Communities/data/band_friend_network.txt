@@ -1,0 +1,129 @@
+74	F	7	Oboe	77	72	13	80	37	78	52	66	73				
+76	F	7	Alto Sax	81	62	63	61	71								
+63	F	7	Alto Sax	64	77	82	72									
+37	F	7	Clarinet	72	83	66	30	52	77	44	54	51	43	40	60	57
+39	F	7	Clarinet	47	50	69										
+40	F	7	Clarinet	63	84	47	37	44	51	62						
+55	M	7	Bari Sax	85	84	86	87	88	77	56						
+45	M	7	Percussion	50	48	62	5									
+70	M	7	Clarinet	91	90	19	57	89								
+58	F	7	Flute	65	69	53	73									
+79	M	7	Tuba	41												
+66	F	7	Flute	92	93	56	80	52	55	48	12	4				
+51	F	7	Horn	16	12	18	66	44	47	40	43	54	48	37		
+78	F	7	Clarinet	94	52	37	95	96								
+65	F	7	Flute	69	73	58	53	80	52							
+54	M	7	Trumpet	60												
+71	M	7	Trumpet	76	70	41	59									
+73	F	7	Flute	65	53	58	69	80	52							
+67	M	7	Tenor Sax	97	56	76	63	55	61	70						
+61	M	7	Horn	60	98	76	48									
+59	M	7	Trumpet	87	99	55	100	15	56	68						
+64	F	7	Clarinet	63	82											
+53	F	7	Flute	58	65	80	52									
+47	F	7	Clarinet	101	39	40	80	51								
+62	M	7	Baritone	102	76	55	70	45								
+75	M	7	Clarinet	103												
+60	M	7	Trombone	48	54											
+80	F	7	Flute	12	42	66	74									
+46	F	7	Trombone	37	56	38	42	44	43							
+52	F	7	Flute	66	78	55	12	94	53	70						
+43	F	7	Clarinet	104	33	44	51									
+44	F	7	Bassoon	83	88	43	56									
+72	F	7	Clarinet	105	106	107	108	37	77	80	70	66				
+42	F	7	Trumpet	80	46	41	65	51	48	52	43	56				
+41	M	7	Tuba	79	76	61	49	42	56							
+50	M	7	Percussion	109	90											
+49	M	7	Trumpet	71	42	54	55	41								
+56	M	7	Trombone	57	60	61	5	41	55	71	62	66	59			
+38	F	7	Clarinet	69	37	43	44	72								
+48	M	7	Percussion	110	90	111										
+77	F	7	Clarinet	74	72	64	63	112	113	55						
+57	M	7	Trombone	114	115	70	56	72								
+69	F	7	Bass Clarinet	116	65	73	47	44	64							
+68	M	7	Trumpet	99	45	55	12	59	77							
+8	M	8	Percussion	10	31	32	117	118	119	5						
+5	M	8	Percussion	118	117	31	10	8	2	14	16	4	32			
+33	F	8	Flute	3	22	23	14	25	18							
+28	F	8	Clarinet	1	2											
+14	F	8	Percussion	23	22	3	16	1	20	63						
+4	M	8	Bari Sax	5	26	35	1	29	27	66	19	20	15	120		
+34	F	8	Flute	22	23	3	14	16	33	121						
+19	M	8	Trombone	5	8	89	120									
+2	F	8	Percussion	13	12	5	8	14	16	28						
+23	F	8	Clarinet	22	28	3	33	18								
+6	M	8	Trumpet	10	3	82	32	15	35	23	22					
+9	F	8	Bass Clarinet	25	36	21	3									
+17	M	8	Tuba	120	11	122	15	29								
+22	F	8	Clarinet	23	18	34	33	121								
+7	F	8	Baritone	12	21	13										
+27	M	8	Tuba	35	26	4	15	11	17	10						
+1	M	8	Trumpet	64	26	123	28	15	11	20						
+12	F	8	Flute	13	21	16	2	5	44							
+26	M	8	Clarinet	27	4	35	1	29	20	23	22					
+36	F	8	Clarinet	16	9	3										
+35	M	8	Trumpet	10	27	1	26	4	15	120						
+16	F	8	Percussion	36	14	2	12	13	34	8	5					
+31	M	8	Horn	5	8	10	29	15								
+13	F	8	Oboe	2	12	124	125	102								
+11	M	8	Baritone	15	17	100	5	29	120	1	27	20				
+21	F	8	Flute	17	12	25	3	16	9	7	37					
+15	M	8	Trumpet	11	10	1	17	120	29	20	27					
+18	F	8	Clarinet	25	29	22	23	33	30	51						
+30	F	8	Horn	37	12	18	83	9								
+32	M	8	Trumpet	8	10	5	15	18	48	100	31	3				
+24	M	8	Alto Sax													
+10	M	8	Trumpet	8	6	32	15	17	31	3	48	117	119			
+20	M	8	Alto Sax	1	15											
+25	F	8	Horn	126	113	3	9	16	127							
+3	F	8	Trumpet	25	34	22	21	23	33	128	93	10	32	14	15	129
+29	M	8	Clarinet	26	120	23	18	22	10	31	17	15	4			
+81	M	10	Trumpet													
+82	M	9	Trumpet													
+83	M	6	Percussion													
+84	M	6	Trumpet													
+85	M	6	Trumpet													
+86	M	6	Trumpet													
+87	M	6	Baritone													
+88	M	10	Trombone													
+89	F	8	Flute													
+90	M	9	Trumpet													
+91	F	9	Clarinet													
+92	M	5														
+93	F	10	Flute													
+94	M	6	Percussion													
+95	F	6	Clarinet													
+96	M	6	Trombone													
+97	M	10	Trombone													
+98	M	9	Oboe													
+99	M	6	Clarinet													
+100	M	8	Tenor Sax													
+101	F	10	Clarinet													
+102	M	6	Trumpet													
+103	F	11	Clarinet													
+104	M	6	Clarinet													
+105	F	12	Clarinet													
+106	M	11	Clarinet													
+107		10														
+108	M	11	Trombone													
+109	M	12	Trumpet													
+110	M	9	Trombone													
+111	M	10														
+112	M	10														
+113	F	10														
+114	M	12														
+115	M	12														
+116	F	6	Clarinet													
+117	M	10	Percussion													
+118	M	9	Percussion													
+119	M	10	Percussion													
+120	M	8	Bass Clarinet													
+121	M	6	Trombone													
+122	F	11	Flute													
+123	M	8	Trumpet													
+124	F	11														
+125	F	9	Tenor Sax													
+126	F	10	Horn													
+127	F	12	Flute													
+128	M	12	Trombone													
+129	F	9	Horn													

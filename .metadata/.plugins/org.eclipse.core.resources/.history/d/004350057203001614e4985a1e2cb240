@@ -17,7 +17,7 @@ import util.GraphLoader;
 public class GraphVisualize extends PApplet{
 	
 	private Graph graph;
-	final static String graphFile = "data/band_friend_network.txt"; // graph to load
+	final static String graphFile = "data/very_small_test.txt"; // graph to load
 	
 	/**
 	 * Main method to run the applet as an application.
@@ -47,8 +47,7 @@ public class GraphVisualize extends PApplet{
 //		background(0);
 		
 		graph = new Graph(this);
-//		GraphLoader.loadEdgeListGraph(graph, graphFile);
-		GraphLoader.loadAdjacencyListGraph(graph, graphFile);
+		GraphLoader.loadEdgeListGraph(graph, graphFile);
 		
 //		print(height, "x", width);
 		

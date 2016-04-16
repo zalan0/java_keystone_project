@@ -20,14 +20,6 @@ public class Graphs {
 		graph = g;
 	}
 	
-	/**
-	 * Breadth First Search implementation that produces a pairing of nodes
-	 * that can be reversed to find a shortest route.
-	 * 
-	 * @param start
-	 * @param goal
-	 * @return
-	 */
 	public static HashMap<Vertex, Vertex> BFS(Vertex start, Vertex goal) {
 		// TODO implement BFS (Algorithm in Course 3, Week 2)
 //		ArrayList<Vertex> path = new ArrayList<Vertex>();

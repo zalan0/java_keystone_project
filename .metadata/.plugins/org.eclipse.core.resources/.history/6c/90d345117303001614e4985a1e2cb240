@@ -74,6 +74,7 @@ public class GraphLoader {
     	try {
     		fileScanner = new Scanner(new File(filename));
     	} catch (Exception e) {
+    		System.out.println("File not found!");
     		e.printStackTrace();
     		return;
     	}
