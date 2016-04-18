@@ -182,9 +182,10 @@ public class Vertex {
 	public String toString() {
 		String ret = "Vertex[";
 		ret += "name: " + name;
-		ret += ", gender: " + gender;
-		ret += ", grade: " + grade;
-		ret += ", instrument: " + instrument + "]";
+//		ret += ", gender: " + gender;
+//		ret += ", grade: " + grade;
+//		ret += ", instrument: " + instrument;
+		ret += "]";
 		return ret;
 	}
 }

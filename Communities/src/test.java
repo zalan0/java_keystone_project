@@ -1,3 +1,4 @@
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.Iterator;
@@ -10,18 +11,22 @@ import graph.Vertex;
 import util.GraphLoader;
 
 public class test {
-	static String filename = "data/band_friend_network.txt";
+	static String filename = "data/very_small_test.txt";
 
 	public static void main(String[] args) {
 		// TODO Auto-generated method stub
 		Graph g = new Graph();
 //		g.printGraph();
 		
-//		GraphLoader.loadEdgeListGraph(g, filename);
-		System.out.println("loading...");
-		GraphLoader.loadAdjacencyListGraph(g, filename);
-		System.out.println("Graph loaded!");
+		GraphLoader.loadEdgeListGraph(g, filename);
+//		System.out.println("loading...");
+//		GraphLoader.loadAdjacencyListGraph(g, filename);
+//		System.out.println("Graph loaded!");
 		g.printGraph();
+		
+		Vertex v = g.getVertex(2);
+		ArrayList<HashSet<Vertex>> result = Graphs.allShortestPaths(v);
+		System.out.println(result);
 		
 //		int[] vertices = {0,1,2,3,4,5,6,7,8,9};
 ////		System.out.println(vertices.toString());
