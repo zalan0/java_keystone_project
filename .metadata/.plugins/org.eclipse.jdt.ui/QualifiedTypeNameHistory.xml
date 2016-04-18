@@ -5,17 +5,17 @@
 <fullyQualifiedTypeName name="processing.core.PApplet"/>
 <fullyQualifiedTypeName name="graph.Graph"/>
 <fullyQualifiedTypeName name="java.util.Vector"/>
-<fullyQualifiedTypeName name="util.GraphLoader"/>
 <fullyQualifiedTypeName name="com.sun.javafx.geom.Edge"/>
-<fullyQualifiedTypeName name="graph.Edge"/>
 <fullyQualifiedTypeName name="java.util.ArrayList"/>
 <fullyQualifiedTypeName name="java.util.Queue"/>
 <fullyQualifiedTypeName name="java.util.LinkedList"/>
 <fullyQualifiedTypeName name="graph.Graphs"/>
-<fullyQualifiedTypeName name="graph.Vertex"/>
-<fullyQualifiedTypeName name="java.util.HashSet"/>
 <fullyQualifiedTypeName name="java.util.Iterator"/>
 <fullyQualifiedTypeName name="java.util.Arrays"/>
 <fullyQualifiedTypeName name="java.lang.Integer"/>
 <fullyQualifiedTypeName name="java.util.HashMap"/>
+<fullyQualifiedTypeName name="util.GraphLoader"/>
+<fullyQualifiedTypeName name="graph.Vertex"/>
+<fullyQualifiedTypeName name="java.util.HashSet"/>
+<fullyQualifiedTypeName name="graph.Edge"/>
 </qualifiedTypeNameHistroy>

@@ -85,6 +85,8 @@ public class Graph {
 		}
 		// add to set of edges in Vertex start
 		start.addEdge(e);
+		// and to finish, since this graph is undirected
+		finish.addEdge(e);
 	}
 	
 	/**

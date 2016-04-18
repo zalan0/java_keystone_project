@@ -10,14 +10,18 @@ import graph.Vertex;
 import util.GraphLoader;
 
 public class test {
-	static String filename = "data/small_test_graph.txt";
+	static String filename = "data/band_friend_network.txt";
 
 	public static void main(String[] args) {
 		// TODO Auto-generated method stub
 		Graph g = new Graph();
 //		g.printGraph();
 		
-		GraphLoader.loadEdgeListGraph(g, filename);
+//		GraphLoader.loadEdgeListGraph(g, filename);
+		System.out.println("loading...");
+		GraphLoader.loadAdjacencyListGraph(g, filename);
+		System.out.println("Graph loaded!");
+		g.printGraph();
 		
 //		int[] vertices = {0,1,2,3,4,5,6,7,8,9};
 ////		System.out.println(vertices.toString());
@@ -56,19 +60,19 @@ public class test {
 		
 //		g.printEdges();
 		
-		Set<Integer> vertNames = g.getVertices().keySet();
-		System.out.println(vertNames.size() + " nodes");
-		System.out.println(g.getEdges().size() + " edges");
+//		Set<Integer> vertNames = g.getVertices().keySet();
+//		System.out.println(vertNames.size() + " nodes");
+//		System.out.println(g.getEdges().size() + " edges");
 		
 //		g.printGraph();
 //		g.printEdges();
-		HashMap<Vertex, Vertex> parentMap = Graphs.BFS(g.getVertex(1), g.getVertex(5));
-		
-		Iterator<Vertex> i = parentMap.keySet().iterator();
-		while(i.hasNext()) {
-			Vertex key = i.next();
-			System.out.println(key.name() + ", " + parentMap.get(key).name());
-		}
+//		HashMap<Vertex, Vertex> parentMap = Graphs.BFS(g.getVertex(1), g.getVertex(5));
+//		
+//		Iterator<Vertex> i = parentMap.keySet().iterator();
+//		while(i.hasNext()) {
+//			Vertex key = i.next();
+//			System.out.println(key.name() + ", " + parentMap.get(key).name());
+//		}
 		
 //		parentMap.printGraph();
 //		System.out.println(parentMap.getVertices().keySet().size());

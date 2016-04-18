@@ -15,11 +15,11 @@ import processing.core.PApplet;
  * draws a line for the visualization.
  */
 public class Edge {
-	private double weight;
+	private double betweeness;
 //	private Vertex start;
 //	private Vertex end;
-	PApplet parent;
-	HashSet<Vertex> ends;
+	private PApplet parent;
+	private HashSet<Vertex> ends;
 	
 	/**
 	 * Constructs an edge.
@@ -31,7 +31,7 @@ public class Edge {
 	public Edge(Vertex start, Vertex finish, PApplet parent) {
 //		this.start = start;
 //		this.end = finish;
-		weight = 0;
+		betweeness = 0;
 		this.parent = parent;
 		ends = new HashSet<Vertex>();
 		ends.add(start);
@@ -41,8 +41,8 @@ public class Edge {
 	/**
 	 * adds one to the weight of this edge
 	 */
-	public void incrementWeight() {
-		weight++;
+	public void incrementBetweeness() {
+		betweeness++;
 	}
 
 //	/**

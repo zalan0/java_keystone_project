@@ -14,6 +14,7 @@ import java.util.Iterator;
 import java.util.Scanner;
 import java.util.Set;
 
+import graph.Edge;
 import graph.Vertex;
 
 public class GraphLoader {
@@ -68,8 +69,16 @@ public class GraphLoader {
 		g.addEdge(v1, v2);
 	}
     
-    public static void loadAdjacencyListGraph(graph.Graph g, String filename){
-    	HashMap<Integer, Set<Integer>> adjacencyList = new HashMap<Integer, Set<Integer>>();
+	/**
+	 * Reads a file that represents a graph as an adjacency list.  The file must have the
+	 * following columns; name (int), gender (string 'M'/'F'), grade (int), and instrument
+	 * (string).  These are followed by any neighbors that the node has.
+	 * 
+	 * @param graph empty Graph file.
+	 * @param filename File that holds the graph
+	 */
+    public static void loadAdjacencyListGraph(graph.Graph graph, String filename){
+    	HashMap<Integer, TempNode> adjacencyList = new HashMap<Integer, TempNode>();
     	Scanner fileScanner;
     	try {
     		fileScanner = new Scanner(new File(filename));
@@ -86,26 +95,46 @@ public class GraphLoader {
     		String gender = lineScanner.next();
     		int grade = lineScanner.nextInt();
     		String instrument = lineScanner.next();
-//    		Vertex v = new Vertex(name, g.getParent());
+    		if(lineScanner.hasNext() && !lineScanner.hasNextInt()) {
+    			instrument += " " + lineScanner.next();
+    		}
+    		Vertex v = new Vertex(name, gender, grade, instrument, graph.getParent());
     		
-    		Set<Integer> neighbors = new HashSet<Integer>();
+    		HashSet<Integer> neighbors = new HashSet<Integer>();
     		while(lineScanner.hasNextInt()) {
     			int n = lineScanner.nextInt();
     			neighbors.add(n);
     		}
-    		
-    		adjacencyList.put(name, neighbors);
+    		TempNode tn = new TempNode(v, neighbors);
+    		adjacencyList.put(name, tn);
     		lineScanner.close();
+    		
     	}
-    	Set<Integer> seen = new HashSet<Integer>();
+    	
+    	// this for testing...
     	Iterator<Integer> i = adjacencyList.keySet().iterator();
     	while(i.hasNext()) {
-    		int name = i.next();
-    		Iterator<Integer> j = adjacencyList.get(i).iterator();
-    		while(j.hasNext()) {
-    			int neighbor = j.next();
-    			makeVerticesEdges(g, seen, name, neighbor);
+    		int next = i.next();
+    		System.out.println(next + "  " + adjacencyList.get(next));
+    	}
+    	// done testing...
+    	
+		Iterator<Integer> keys = adjacencyList.keySet().iterator();
+    	while(keys.hasNext()) {
+    		int name1 = keys.next();
+    		TempNode currTempNode = adjacencyList.get(name1);
+    		Vertex v1 = currTempNode.getVertex();
+    		graph.addVertex(v1);
+    		Iterator<Integer> neighbors = currTempNode.getNeighbors().iterator();
+    		while(neighbors.hasNext()) {
+    			int name2 = neighbors.next();
+    			Vertex v2 = adjacencyList.get(name2).getVertex();
+//    			Edge edge = new Edge(v1, v2, graph.getParent());
+//    			v1.addEdge(edge);
+//    			v2.addEdge(edge);
+    			graph.addEdge(v1, v2);
     		}
+    		
     	}
     	
     	fileScanner.close();

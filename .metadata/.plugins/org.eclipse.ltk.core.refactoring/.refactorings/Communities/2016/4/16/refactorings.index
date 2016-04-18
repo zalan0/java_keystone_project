@@ -2,3 +2,6 @@
 1460767301168	Rename method 'loadEdgeFileGraph'
 1460768355113	Rename local variable 'sc'
 1460769508082	Extract method 'makeVerticesEdges'
+1460808062620	Rename local variable 'i'
+1460808887122	Rename local variable 'g'
+1460841900224	Rename field 'weight'

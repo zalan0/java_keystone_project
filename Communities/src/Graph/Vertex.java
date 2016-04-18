@@ -22,6 +22,10 @@ public class Vertex {
 	private final static float VELOCITY = 1;  // how fast the circle moves
 	private int direction; // direction that the circle moves
 	
+	private String gender;
+	private int grade;
+	private String instrument;
+	
 	/**
 	 * Constructs a vertex.
 	 * 
@@ -29,12 +33,20 @@ public class Vertex {
 	 * @param parent PApplet that the node will be drawn on.
 	 */
 	public Vertex(int name, PApplet parent) {
+		this(name, "", -1, "", parent);
+	}
+	
+	public Vertex(int name, String gender, int grade, String instrument, PApplet parent) {
 		this.name = name;
 		this.parent = parent;
 		edges = new HashSet<Edge>();
 		positionX = parent.random(RADIUS, parent.width - RADIUS);
 		positionY = parent.random(RADIUS, parent.height - RADIUS);
 		direction = Math.round(parent.random((float) 0.5, (float) 8.5));
+		
+		this.gender = gender;
+		this.grade = grade;
+		this.instrument = instrument;
 	}
 	
 	/**
@@ -165,5 +177,14 @@ public class Vertex {
 		if(positionY < RADIUS) positionY = parent.height - RADIUS;
 		if(positionX > parent.width - RADIUS) positionX = RADIUS;
 		if(positionX < RADIUS) positionX = parent.width - RADIUS;
+	}
+	
+	public String toString() {
+		String ret = "Vertex[";
+		ret += "name: " + name;
+		ret += ", gender: " + gender;
+		ret += ", grade: " + grade;
+		ret += ", instrument: " + instrument + "]";
+		return ret;
 	}
 }

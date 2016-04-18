@@ -14,11 +14,11 @@ import java.util.Queue;
  */
 public class Graphs {
 	
-	Graph graph;
-	
-	public Graphs(Graph g) {
-		graph = g;
-	}
+//	Graph graph;
+//	
+//	public Graphs(Graph g) {
+//		graph = g;
+//	}
 	
 	/**
 	 * Breadth First Search implementation that produces a pairing of nodes
@@ -67,4 +67,7 @@ public class Graphs {
 		return null;
 	}
 	
+	public static Vertex[] brandesAlg(Graph graph) {
+		Vertex[] centrallity
+	}
 }
