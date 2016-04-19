@@ -15,7 +15,7 @@ import processing.core.PApplet;
  * draws a line for the visualization.
  */
 public class Edge {
-	private double betweeness;
+	private double flow;
 //	private Vertex start;
 //	private Vertex end;
 	private PApplet parent;
@@ -31,7 +31,7 @@ public class Edge {
 	public Edge(Vertex start, Vertex finish, PApplet parent) {
 //		this.start = start;
 //		this.end = finish;
-		betweeness = 0;
+		flow = 0.0d;
 		this.parent = parent;
 		ends = new HashSet<Vertex>();
 		ends.add(start);
@@ -41,8 +41,12 @@ public class Edge {
 	/**
 	 * adds one to the weight of this edge
 	 */
-	public void incrementBetweeness() {
-		betweeness++;
+	public void incrementFlow(double amount) {
+		flow += amount;
+	}
+	
+	public double getFlow() {
+		return flow;
 	}
 
 //	/**

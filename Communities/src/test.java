@@ -24,9 +24,14 @@ public class test {
 //		System.out.println("Graph loaded!");
 		g.printGraph();
 		
-		Vertex v = g.getVertex(2);
-		ArrayList<HashSet<Vertex>> result = Graphs.allShortestPaths(v);
-		System.out.println(result);
+		Vertex v = g.getVertex(1);
+		ArrayList<HashSet<Vertex>> levels = Graphs.shortestRoutesBFS(v);
+		for(HashSet<Vertex> s: levels) {
+			System.out.println(s);
+		}
+		
+		HashMap<Vertex, Integer> paths = Graphs.numberOfShortestPaths(levels);
+		System.out.println(paths);
 		
 //		int[] vertices = {0,1,2,3,4,5,6,7,8,9};
 ////		System.out.println(vertices.toString());

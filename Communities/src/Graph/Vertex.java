@@ -107,6 +107,8 @@ public class Vertex {
 		return ret;
 	}
 	
+	
+	
 	/**
 	 * For testing purposes.  Lists names of neighbor nodes.
 	 * @return String containing list of neighbor nodes.
@@ -180,12 +182,14 @@ public class Vertex {
 	}
 	
 	public String toString() {
-		String ret = "Vertex[";
-		ret += "name: " + name;
+		String ret = "";
+//		ret += "Vertex[";
+//		ret += "name: "
+		ret += name;
 //		ret += ", gender: " + gender;
 //		ret += ", grade: " + grade;
 //		ret += ", instrument: " + instrument;
-		ret += "]";
+//		ret += "]";
 		return ret;
 	}
 }

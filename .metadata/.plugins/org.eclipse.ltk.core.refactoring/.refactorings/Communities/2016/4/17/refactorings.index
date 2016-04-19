@@ -1,1 +1,5 @@
 1460981965149	Rename package 'Graph'
+1461026548949	Rename local variable 'queue'
+1461027807496	Rename local variable 'initialSet'
+1461030213539	Rename local variable 'result'
+1461031103611	Rename field 'betweeness'
