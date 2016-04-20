@@ -260,56 +260,6 @@ public class Graphs {
 		}
 	}
 	
-	public static void calculateEdgeFlow2
-	(ArrayList<HashSet<Vertex>> levels, HashMap<Vertex, Integer> paths) {
-		HashMap<Edge, Double> flowMap = new HashMap<Edge, Double>(); 
-//		HashMap<Vertex, Double> incomingFlows = new HashMap<Vertex, Double>();
-		
-		// initialize bottom level w/ total flow of 1
-		// divided by the ratio of paths to neighbors
-		int level = levels.size()-1;
-		HashSet<Vertex> currentLevel = levels.get(level);
-		HashSet<Vertex> aboveCurrentLevel = levels.get(level-1);
-		int totalPaths = 0;
-		Iterator<Vertex> it = currentLevel.iterator();
-		
-		// find total paths through this level
-		while(it.hasNext()) {
-			Vertex currentNode = it.next();
-			totalPaths += paths.get(currentNode);
-		}
-		
-		// assign flows to edges
-		it = currentLevel.iterator();
-		while(it.hasNext()) {
-			Vertex currentNode = it.next();
-			double incomingFlow = paths.get(currentNode) / (double) totalPaths;
-			HashSet<Edge> edges = currentNode.getEdges();
-			Iterator<Edge> edgeIt = edges.iterator();
-			while(edgeIt.hasNext()) {
-				Edge edge = edgeIt.next();
-				if(!aboveCurrentLevel.contains(edge.getOther(currentNode))) {
-					edges.remove(edge);
-				}
-			}
-			edgeIt = edges.iterator();
-			while(edgeIt.hasNext()) {
-				Edge edge = edgeIt.next();
-				double flow = incomingFlow / (double) edges.size();
-				flowMap.put(edge, flow);
-			}
-		}
-		/*
-		 * Iterate back wards through array starting with
-		 * second to lowest level.
-		 */
-		
-			/*
-			 * for each node at this level divide it's flow
-			 * into the neighbors above
-			 */
-	}
-	
 	/**
 	 * Computes the betweeness of all edges in a graph.
 	 * 
