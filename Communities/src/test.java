@@ -11,27 +11,43 @@ import graph.Vertex;
 import util.GraphLoader;
 
 public class test {
-	static String filename = "data/very_small_test.txt";
+	static String filename = "data/ring_graph.txt";
 
 	public static void main(String[] args) {
 		// TODO Auto-generated method stub
 		Graph g = new Graph();
 //		g.printGraph();
 		
-		GraphLoader.loadEdgeListGraph(g, filename);
-//		System.out.println("loading...");
+
+		System.out.println("loading...");
+		GraphLoader.loadEdgeListGraph(g, filename);		
 //		GraphLoader.loadAdjacencyListGraph(g, filename);
-//		System.out.println("Graph loaded!");
+		System.out.println("Graph loaded!");
 		g.printGraph();
+//		HashSet<HashSet<Vertex>> connected = Graphs.findConnectedness(g);
+//		Iterator i = connected.iterator();
+//		while(i.hasNext()){
+//			System.out.println(i.next());
+//		}
+//		Graphs.computeFlow(g);
+//		g.printEdges();
 		
 		Vertex v = g.getVertex(1);
+		System.out.println("output of BFS");
 		ArrayList<HashSet<Vertex>> levels = Graphs.shortestRoutesBFS(v);
 		for(HashSet<Vertex> s: levels) {
 			System.out.println(s);
 		}
+		System.out.println();
 		
-		HashMap<Vertex, Integer> paths = Graphs.numberOfShortestPaths(levels);
+
+		System.out.println("number of paths through each node");HashMap<Vertex, Integer> paths = Graphs.countShortestPaths(levels);
 		System.out.println(paths);
+		System.out.println();
+
+		System.out.println("Flow through each edge");
+		Graphs.calculateEdgeFlow(levels, paths);
+		g.printEdges();
 		
 //		int[] vertices = {0,1,2,3,4,5,6,7,8,9};
 ////		System.out.println(vertices.toString());

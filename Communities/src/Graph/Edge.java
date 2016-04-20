@@ -94,7 +94,7 @@ public class Edge {
 		Iterator<Vertex> e = ends.iterator();
 		Vertex start = e.next();
 		Vertex end = e.next();
-		String ret = start.name() + " <-> " + end.name();
+		String ret = start.name() + "<-" + flow + "->"+ end.name();
 		return ret;
 	}
 
