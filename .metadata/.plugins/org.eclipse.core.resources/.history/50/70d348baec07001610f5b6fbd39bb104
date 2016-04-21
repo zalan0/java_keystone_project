@@ -253,50 +253,77 @@ public class Graphs {
 	 */
 	public static void calculateEdgeFlow
 	(ArrayList<HashSet<Vertex>> levels, HashMap<Vertex, Integer> paths) {
-
+		// TODO Redo, add 1 to each incomingFlow and readjust how the lowest level is approached
 		HashMap<Edge, Double> flowMap = new HashMap<Edge, Double>(); 
-
+//		HashMap<Vertex, Double> incomingFlows = new HashMap<Vertex, Double>();
+		
+		// initialize bottom level w/ total flow of 1
+		// divided by the ratio of paths to neighbors
+		int level = levels.size()-1;
+		HashSet<Vertex> currentLevel = levels.get(level);
+		HashSet<Vertex> aboveCurrentLevel = levels.get(level-1);
+		int totalPaths = 0;
+		Iterator<Vertex> it = currentLevel.iterator();
+		
+		// find total paths through this level
+		while(it.hasNext()) {
+			Vertex currentNode = it.next();
+			totalPaths += paths.get(currentNode);
+		}
+		
+		// assign flows to edges
+		it = currentLevel.iterator();
+		while(it.hasNext()) {
+			Vertex currentNode = it.next();
+			double incomingFlow = paths.get(currentNode) / (double) totalPaths;
+			HashSet<Edge> edges = new HashSet<Edge>();
+			Iterator<Edge> edgeIt = currentNode.getEdges().iterator();
+			while(edgeIt.hasNext()) {
+				Edge edge = edgeIt.next();
+				if(aboveCurrentLevel.contains(edge.getOther(currentNode))) {
+					edges.add(edge);
+				}
+			}
+			edgeIt = edges.iterator();
+			while(edgeIt.hasNext()) {
+				Edge edge = edgeIt.next();
+				double flow = incomingFlow / (double) edges.size();
+				flowMap.put(edge, flow);
+			}
+		}
 		/*
 		 * Iterate back wards through array starting with
-		 *  lowest level.
+		 * second to lowest level.
 		 */
-		for(int level = levels.size()-1; level > 0; level--) {
-			HashSet<Vertex> currentLevel = levels.get(level);
-			HashSet<Vertex> aboveCurrentLevel = levels.get(level-1);
-			HashSet<Vertex> belowCurrentLevel = new HashSet<Vertex>();
-			if(level < levels.size()-1) {
-				belowCurrentLevel= levels.get(level+1);
-			}
+		for(level = levels.size()-2; level > 0; level--) {
+			currentLevel = levels.get(level);
+			aboveCurrentLevel = levels.get(level-1);
+			HashSet<Vertex> belowCurrentLevel = levels.get(level+1);
 			// calculate incoming flow for each node of current level
-			Iterator<Vertex> it = currentLevel.iterator();
+			it = currentLevel.iterator();
 			while(it.hasNext()) {
 				double incomingFlow = 0.0d;
 				Vertex currentNode = it.next();
-				
 				// get all neighbor edges that point below
-				if(level < levels.size()-1){
-					HashSet<Edge> belowEdges = new HashSet<Edge>();
-					Iterator<Edge> edgeIt = currentNode.getEdges().iterator();
-					while(edgeIt.hasNext()) {
-						Edge edge = edgeIt.next();
-						if(belowCurrentLevel.contains(edge.getOther(currentNode))) {
-							belowEdges.add(edge);
-						}
+				HashSet<Edge> belowEdges = new HashSet<Edge>();
+				Iterator<Edge> edgeIt = currentNode.getEdges().iterator();
+				while(edgeIt.hasNext()) {
+					Edge edge = edgeIt.next();
+					if(belowCurrentLevel.contains(edge.getOther(currentNode))) {
+						belowEdges.add(edge);
 					}
-				
-					// sum flow from incoming edges
-					Iterator<Edge> e = belowEdges.iterator();
-					while(e.hasNext()) {
-						Edge edge = e.next();
-						incomingFlow += flowMap.get(edge);
-					}
-				} 
-				incomingFlow += 1;
+				}
+				// sum flow from incoming edges
+				edgeIt = belowEdges.iterator();
+				while(edgeIt.hasNext()) {
+					Edge edge = edgeIt.next();
+					incomingFlow += flowMap.get(edge);
+				}
 				// assign flow
 				// first find all up flowing edges and total the other node's paths
 				HashSet<Edge> aboveEdges = new HashSet<Edge>();
-				Iterator<Edge> edgeIt = currentNode.getEdges().iterator();
-				int totalPaths = 0;
+				edgeIt = currentNode.getEdges().iterator();
+				totalPaths = 0;
 				while(edgeIt.hasNext()) {
 					Edge edge = edgeIt.next();
 					Vertex other = edge.getOther(currentNode);
@@ -322,7 +349,7 @@ public class Graphs {
 		Iterator<Edge> edgeIt = flowMap.keySet().iterator();
 		while(edgeIt.hasNext()) {
 			Edge edge = edgeIt.next();
-			edge.incrementFlow(flowMap.get(edge)/2.0d);
+			edge.incrementFlow(flowMap.get(edge));
 		}
 	}
 	

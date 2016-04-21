@@ -253,7 +253,7 @@ public class Graphs {
 	 */
 	public static void calculateEdgeFlow
 	(ArrayList<HashSet<Vertex>> levels, HashMap<Vertex, Integer> paths) {
-
+		// TODO Redo, add 1 to each incomingFlow and readjust how the lowest level is approached
 		HashMap<Edge, Double> flowMap = new HashMap<Edge, Double>(); 
 
 		/*

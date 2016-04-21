@@ -11,7 +11,7 @@ import graph.Vertex;
 import util.GraphLoader;
 
 public class test {
-	static String filename = "data/facebook_1000.txt";
+	static String filename = "data/ring_graph.txt";
 
 	public static void main(String[] args) {
 		// TODO Auto-generated method stub
@@ -32,7 +32,7 @@ public class test {
 		Graphs.computeFlow(g);
 		g.printEdges();
 		
-//		Vertex v = g.getVertex(1);
+//		Vertex v = g.getVertex(2);
 //		System.out.println("output of BFS");
 //		ArrayList<HashSet<Vertex>> levels = Graphs.shortestRoutesBFS(v);
 //		for(HashSet<Vertex> s: levels) {
