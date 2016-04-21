@@ -7,6 +7,7 @@ import java.util.HashSet;
 import java.util.Iterator;
 import java.util.LinkedList;
 import java.util.Queue;
+import java.util.Set;
 
 /**
  * Utility class of methods for graphs.
@@ -155,6 +156,55 @@ public class Graphs {
 		return levels;
 	}
 	
+	public static ArrayList<HashSet<Vertex>> shortestRoutesBFS2
+	(Vertex start, Vertex finish) {
+		if(start.equals(finish)) return null;
+		// initialize queue, visited, and levels array
+		ArrayList<HashSet<Vertex>> levels = new ArrayList<HashSet<Vertex>>();
+		Queue<Vertex> currentLevel = new LinkedList<Vertex>();
+		Queue<Vertex> nextLevel = new LinkedList<Vertex>();
+		HashSet<Vertex> visited = new HashSet<Vertex>();
+		
+		// enqueue start onto queue and add to visited and levels
+		currentLevel.add(start);
+		visited.add(start);
+		levels.add(new HashSet<Vertex>(Arrays.asList(start)));
+		
+		//while queue is not empty, do stuff...
+		while(!currentLevel.isEmpty()) {
+			//dequeue node curr from front of queue and increment level
+			Vertex curr = currentLevel.poll();
+			
+			// for each of curr's neighbors, n, not in visited set
+			Vertex[] neighbors = curr.getNeighbors();
+			for(Vertex n: neighbors) {
+				
+				if(!visited.contains(n)) {
+					
+					// add n to visited set
+					visited.add(n);
+					
+					// engueue n onto queue
+					nextLevel.add(n);
+				}
+			}
+			
+			// when the currentLevel queue is empty, swap it with the nextLevel 
+			// queue and add that to the levels array
+			if(currentLevel.isEmpty()) {
+				if(!nextLevel.isEmpty()) 
+					levels.add(new HashSet<Vertex>(nextLevel));
+				currentLevel.addAll(nextLevel);
+				nextLevel.clear();
+			}
+			
+			// return the mess when we are done with the finish node
+			return levels;
+		}
+		return null;
+	}
+
+	
 	/**
 	 * Method that takes the output from the shortestRoutesBFS method and finds the number of
 	 * paths that travel through each node.
@@ -201,67 +251,9 @@ public class Graphs {
 	 * @param paths a map of nodes and the amount of paths that travel through them - output from
 	 * 			numberOfShortestPaths.
 	 */
-	public static void calculateEdgeFlow(ArrayList<HashSet<Vertex>> levels,
-			HashMap<Vertex, Integer> paths) {  
-		//TODO not returning correct value on edges from start to levels index 1 
-		// see notes for week 4 for a new algorithm
-		
-		// Decrement through levels
-		for(int level = levels.size() - 1; level > 0; level--) {
-			//iterate through current level
-			HashSet<Vertex> aboveLevel = levels.get(level - 1);
-			HashSet<Vertex> belowLevel = new HashSet<Vertex>();
-			if(level != levels.size() - 1) {
-				belowLevel = levels.get(level + 1);
-			}
-			Iterator<Vertex> currentLevel = levels.get(level).iterator();
-			while(currentLevel.hasNext()) {
-				Vertex currentNode = currentLevel.next();
-				
-				// find max flow (all flow arriving to this node from below + 1 for itself)
-				double maxFlow = 0.0d;
-				if(level != levels.size() - 1) {
-					// add flows from all incoming edges
-					Iterator<Edge> edges = currentNode.getEdges().iterator();
-					while(edges.hasNext()) {
-						Edge edge = edges.next();
-						Vertex other = edge.getOther(currentNode);
-						if(belowLevel.contains(other)) {
-							maxFlow += edge.getFlow();
-						}
-					}
-				} 
-				maxFlow += 1;
-				
-				// compare level above to neighbors of current node
-				// find total paths
-				int totalPaths = 0;
-				HashMap<Vertex, Edge> neighborsAbove = new HashMap<Vertex, Edge>();
-				Iterator<Edge> edges = currentNode.getEdges().iterator();
-				while(edges.hasNext()) {
-					Edge edge = edges.next();
-					Vertex other = edge.getOther(currentNode);
-					if(aboveLevel.contains(other)) {
-						totalPaths += paths.get(other);
-						neighborsAbove.put(other, edge);
-					}
-				}
-				// flow for edge will be the ratio of total paths to neighbor's path
-				Iterator<Vertex> i = neighborsAbove.keySet().iterator();
-				while(i.hasNext()) {
-					Vertex neighbor = i.next();
-					System.out.println("setting flow from " + neighbor.name() + "to " + currentNode.name());
-					double ratio = paths.get(neighbor)/ (double) totalPaths;
-					double flow = ((ratio) * maxFlow) / 2.0d;
-					System.out.println("    ratio: " + ratio + "  flow: " + flow);
-					neighborsAbove.get(neighbor).incrementFlow(flow);
-				}
-			}
-		}
-	}
-	
-	public static void calculateEdgeFlow2
+	public static void calculateEdgeFlow
 	(ArrayList<HashSet<Vertex>> levels, HashMap<Vertex, Integer> paths) {
+		// TODO Redo, add 1 to each incomingFlow and readjust how the lowest level is approached
 		HashMap<Edge, Double> flowMap = new HashMap<Edge, Double>(); 
 //		HashMap<Vertex, Double> incomingFlows = new HashMap<Vertex, Double>();
 		
@@ -284,12 +276,12 @@ public class Graphs {
 		while(it.hasNext()) {
 			Vertex currentNode = it.next();
 			double incomingFlow = paths.get(currentNode) / (double) totalPaths;
-			HashSet<Edge> edges = currentNode.getEdges();
-			Iterator<Edge> edgeIt = edges.iterator();
+			HashSet<Edge> edges = new HashSet<Edge>();
+			Iterator<Edge> edgeIt = currentNode.getEdges().iterator();
 			while(edgeIt.hasNext()) {
 				Edge edge = edgeIt.next();
-				if(!aboveCurrentLevel.contains(edge.getOther(currentNode))) {
-					edges.remove(edge);
+				if(aboveCurrentLevel.contains(edge.getOther(currentNode))) {
+					edges.add(edge);
 				}
 			}
 			edgeIt = edges.iterator();
@@ -303,11 +295,62 @@ public class Graphs {
 		 * Iterate back wards through array starting with
 		 * second to lowest level.
 		 */
-		
-			/*
-			 * for each node at this level divide it's flow
-			 * into the neighbors above
-			 */
+		for(level = levels.size()-2; level > 0; level--) {
+			currentLevel = levels.get(level);
+			aboveCurrentLevel = levels.get(level-1);
+			HashSet<Vertex> belowCurrentLevel = levels.get(level+1);
+			// calculate incoming flow for each node of current level
+			it = currentLevel.iterator();
+			while(it.hasNext()) {
+				double incomingFlow = 0.0d;
+				Vertex currentNode = it.next();
+				// get all neighbor edges that point below
+				HashSet<Edge> belowEdges = new HashSet<Edge>();
+				Iterator<Edge> edgeIt = currentNode.getEdges().iterator();
+				while(edgeIt.hasNext()) {
+					Edge edge = edgeIt.next();
+					if(belowCurrentLevel.contains(edge.getOther(currentNode))) {
+						belowEdges.add(edge);
+					}
+				}
+				// sum flow from incoming edges
+				edgeIt = belowEdges.iterator();
+				while(edgeIt.hasNext()) {
+					Edge edge = edgeIt.next();
+					incomingFlow += flowMap.get(edge);
+				}
+				// assign flow
+				// first find all up flowing edges and total the other node's paths
+				HashSet<Edge> aboveEdges = new HashSet<Edge>();
+				edgeIt = currentNode.getEdges().iterator();
+				totalPaths = 0;
+				while(edgeIt.hasNext()) {
+					Edge edge = edgeIt.next();
+					Vertex other = edge.getOther(currentNode);
+					if(aboveCurrentLevel.contains(other)) {
+						totalPaths += paths.get(other);
+						aboveEdges.add(edge);
+					}
+				}
+				// assign flow to each edge
+				edgeIt = aboveEdges.iterator();
+				while(edgeIt.hasNext()) {
+					Edge edge = edgeIt.next();
+					Vertex other = edge.getOther(currentNode);
+					double flow = (paths.get(other)/ (double) totalPaths) * incomingFlow;
+					flowMap.put(edge, flow);
+				}
+				
+				
+			}
+		}
+		System.out.println(flowMap);
+		// increment each edge's flow
+		Iterator<Edge> edgeIt = flowMap.keySet().iterator();
+		while(edgeIt.hasNext()) {
+			Edge edge = edgeIt.next();
+			edge.incrementFlow(flowMap.get(edge));
+		}
 	}
 	
 	/**
@@ -320,11 +363,39 @@ public class Graphs {
 		while(i.hasNext()) {
 			int nodeName = i.next();
 			Vertex currentNode = graph.getVertex(nodeName);
+			System.out.println(currentNode);
 			ArrayList<HashSet<Vertex>> levels = shortestRoutesBFS(currentNode);
+			System.out.println(levels);
 			HashMap<Vertex, Integer> paths = countShortestPaths(levels);
+			System.out.println(paths);
 			calculateEdgeFlow(levels, paths);
 		}
 	}
+
+	/**
+	 * Computes the betweeness of all edges in a graph.
+	 * 
+	 * @param graph
+	 */
+	public static void computeFlow2(Graph graph) {
+		Iterator<Integer> i = graph.getVerticeIterator();
+		while(i.hasNext()) {
+			int startName = i.next();
+			Vertex start = graph.getVertex(startName);
+			
+			Iterator<Integer> j = graph.getVerticeIterator();
+			while(j.hasNext()){
+				int finishName  = j.next();
+				if(startName != finishName) {
+					Vertex finish = graph.getVertex(finishName);
+					ArrayList<HashSet<Vertex>> levels = shortestRoutesBFS2(start, finish);
+					HashMap<Vertex, Integer> paths = countShortestPaths(levels);
+					calculateEdgeFlow(levels, paths);
+				}
+			}
+		}
+	}
+
 	
 	/**
 	 * Checks for unconnected portions of the graph.

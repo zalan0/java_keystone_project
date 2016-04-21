@@ -8,3 +8,6 @@
 1461105526696	Rename resource 'small_test_graph3'
 1461148737721	Rename method 'incrementEdgeFlow'
 1461181258338	Rename local variable 'bottomNodes'
+1461194139350	Rename local variable 'level'
+1461200674483	Rename local variable 'currentNode'
+1461200867113	Rename local variable 'nodeName'
