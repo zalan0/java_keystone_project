@@ -11,7 +11,7 @@ import graph.Vertex;
 import util.GraphLoader;
 
 public class test {
-	static String filename = "data/ring_graph.txt";
+	static String filename = "data/very_small_test.txt";
 
 	public static void main(String[] args) {
 		// TODO Auto-generated method stub
@@ -24,13 +24,16 @@ public class test {
 //		GraphLoader.loadAdjacencyListGraph(g, filename);
 		System.out.println("Graph loaded!");
 		g.printGraph();
+		
+		Graphs.girvanNewman(g, 1);
+		
 //		HashSet<HashSet<Vertex>> connected = Graphs.findConnectedness(g);
 //		Iterator i = connected.iterator();
 //		while(i.hasNext()){
 //			System.out.println(i.next());
 //		}
-		Graphs.computeFlow(g);
-		g.printEdges();
+//		Graphs.computeFlow(g);
+//		g.printEdges();
 		
 //		Vertex v = g.getVertex(2);
 //		System.out.println("output of BFS");

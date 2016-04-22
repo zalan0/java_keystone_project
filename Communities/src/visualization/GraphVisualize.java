@@ -17,7 +17,7 @@ import util.GraphLoader;
 public class GraphVisualize extends PApplet{
 	
 	private Graph graph;
-	final static String graphFile = "data/band_friend_network.txt"; // graph to load
+	final static String graphFile = "data/very_small_test.txt"; // graph to load
 	
 	/**
 	 * Main method to run the applet as an application.
@@ -43,29 +43,16 @@ public class GraphVisualize extends PApplet{
 	 * Instantiates and loads the graph.
 	 */
 	public void setup() {
-		
-//		background(0);
-		
 		graph = new Graph(this);
-//		GraphLoader.loadEdgeListGraph(graph, graphFile);
-		GraphLoader.loadAdjacencyListGraph(graph, graphFile);
-		
-//		print(height, "x", width);
-		
-//		graph.printGraph();
-		
-//		Iterator<Integer> i = graph.getVerticeIterator();
-//		while(i.hasNext()) {
-//			int vName = i.next();
-//			System.out.println(graph.getVertex(vName).name());
-//		}
+		GraphLoader.loadEdgeListGraph(graph, graphFile);
+//		GraphLoader.loadAdjacencyListGraph(graph, graphFile);
 	}
 	
 	/**
 	 * draw method from PApplet that continually draws the graph.
 	 */
 	public void draw() {
-		background(128);
+		background(127);
 		Iterator<Integer> i = graph.getVerticeIterator();
 		while(i.hasNext()) {
 			int vName = i.next();
@@ -76,7 +63,7 @@ public class GraphVisualize extends PApplet{
 				Edge edge = e.next();
 				edge.draw();
 			}
-			v.update(); // added to make the graph move!
+//			v.update(); // added to make the graph move!
 		}
 	}
 }

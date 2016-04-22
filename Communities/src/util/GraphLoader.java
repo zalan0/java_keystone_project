@@ -78,6 +78,7 @@ public class GraphLoader {
 	 * @param filename File that holds the graph
 	 */
     public static void loadAdjacencyListGraph(graph.Graph graph, String filename){
+    	//TODO revisit this.  Can I do this without using TempNode?
     	HashMap<Integer, TempNode> adjacencyList = new HashMap<Integer, TempNode>();
     	Scanner fileScanner;
     	try {
@@ -129,9 +130,6 @@ public class GraphLoader {
     		while(neighbors.hasNext()) {
     			int name2 = neighbors.next();
     			Vertex v2 = adjacencyList.get(name2).getVertex();
-//    			Edge edge = new Edge(v1, v2, graph.getParent());
-//    			v1.addEdge(edge);
-//    			v2.addEdge(edge);
     			graph.addEdge(v1, v2);
     		}
     		

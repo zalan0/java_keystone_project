@@ -3,6 +3,7 @@ package graph;
 import java.util.HashSet;
 import java.util.Iterator;
 import processing.core.*;
+import visualization.Coordinate;
 
 /**
  * Represents a node of the graph.
@@ -15,10 +16,11 @@ import processing.core.*;
 public class Vertex {
 	private int name;
 	private PApplet parent;
-	private float positionX;
-	private float positionY;
+//	private float positionX;
+//	private float positionY;
+	private Coordinate position;
 	private HashSet<Edge> edges;
-	private final static int RADIUS = 5;  // size of circle to draw
+	private final static float RADIUS = 5;  // size of circle to draw
 	private final static float VELOCITY = 1;  // how fast the circle moves
 	private int direction; // direction that the circle moves
 	
@@ -40,9 +42,10 @@ public class Vertex {
 		this.name = name;
 		this.parent = parent;
 		edges = new HashSet<Edge>();
-		positionX = parent.random(RADIUS, parent.width - RADIUS);
-		positionY = parent.random(RADIUS, parent.height - RADIUS);
+		float x = parent.random(RADIUS, parent.width - RADIUS);
+		float y = parent.random(RADIUS, parent.height - RADIUS);
 		direction = Math.round(parent.random((float) 0.5, (float) 8.5));
+		position = new Coordinate(x, y);
 		
 		this.gender = gender;
 		this.grade = grade;
@@ -61,16 +64,16 @@ public class Vertex {
 	 * Gets the x value of the coordinates for this node.
 	 * @return Float representing the horizontal coordinate to draw this node
 	 */
-	public float x() {
-		return positionX;
+	public float getX() {
+		return position.getX();
 	}
 	
 	/**
 	 * Gets the y value of the coordinates for this node.
 	 * @return Float representing the vertical coordinate to draw this node
 	 */
-	public float y() {
-		return positionY;
+	public float getY() {
+		return position.getY();
 	}
 	
 	/**
@@ -79,6 +82,10 @@ public class Vertex {
 	 */
 	public void addEdge(Edge e) {
 		edges.add(e);
+	}
+	
+	public void removeEdge(Edge e) {
+		edges.remove(e);
 	}
 	
 	/**
@@ -107,8 +114,6 @@ public class Vertex {
 		return ret;
 	}
 	
-	
-	
 	/**
 	 * For testing purposes.  Lists names of neighbor nodes.
 	 * @return String containing list of neighbor nodes.
@@ -130,10 +135,10 @@ public class Vertex {
 	 * upper right.
 	 */
 	public void draw() {
-		parent.ellipse(positionX, positionY, RADIUS, RADIUS);
+		parent.ellipse(position.getX(), position.getY(), RADIUS, RADIUS);
 		
 		parent.textSize(RADIUS * 2);
-		parent.text(name, positionX + RADIUS, positionY - RADIUS);
+		parent.text(name, position.getX() + RADIUS, position.getY() - RADIUS);
 //		String coords = "" + positionX + ", " + positionY;
 //		parent.text(coords, positionX + RADIUS, positionY - RADIUS * 4);
 	}
@@ -146,39 +151,39 @@ public class Vertex {
 //		int direction = Math.round(parent.random((float) 0.5, (float) 8.5));
 		switch(direction) {
 			// right
-			case 1: positionX += VELOCITY;
+			case 1: position.setX(position.getX() + VELOCITY);
 					break;
 			// right and down		
-			case 2: positionX += VELOCITY;
-					positionY += VELOCITY;
+			case 2: position.setX(position.getX() + VELOCITY);
+					position.setY(position.getY() + VELOCITY);
 					break;
 			// down
-			case 3: positionY += VELOCITY;
+			case 3: position.setY(position.getY() + VELOCITY);
 					break;
 			// left and down
-			case 4: positionX -= VELOCITY;
-					positionY += VELOCITY;
+			case 4: position.setX(position.getX() - VELOCITY);
+					position.setY(position.getY() + VELOCITY);
 					break;
 			// left
-			case 5: positionX -= VELOCITY;
+			case 5: position.setX(position.getX() - VELOCITY);
 					break;
 			// left and up
-			case 6: positionX -= VELOCITY;
-					positionY -= VELOCITY;
+			case 6: position.setX(position.getX() - VELOCITY);
+					position.setY(position.getY() - VELOCITY);
 					break;
 			// up
-			case 7: positionY -= VELOCITY;
+			case 7: position.setY(position.getY() - VELOCITY);
 					break;
 			// right and up
-			case 8: positionX += VELOCITY;
-					positionY -= VELOCITY;
+			case 8: position.setX(position.getX() + VELOCITY);
+					position.setY(position.getY() - VELOCITY);
 					break;
 			default: break;
 		}
-		if(positionY > parent.height - RADIUS) positionY = RADIUS;
-		if(positionY < RADIUS) positionY = parent.height - RADIUS;
-		if(positionX > parent.width - RADIUS) positionX = RADIUS;
-		if(positionX < RADIUS) positionX = parent.width - RADIUS;
+		if(position.getY() > parent.height - RADIUS) position.setY(RADIUS);
+		if(position.getY() < RADIUS) position.setY(parent.height - RADIUS);
+		if(position.getX() > parent.width - RADIUS) position.setX(RADIUS);
+		if(position.getX() < RADIUS) position.setX(parent.width - RADIUS);
 	}
 	
 	public String toString() {

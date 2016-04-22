@@ -84,7 +84,7 @@ public class Edge {
 		Iterator<Vertex> e = ends.iterator();
 		Vertex start = e.next();
 		Vertex end = e.next();
-		parent.line(start.x(), start.y(), end.x(), end.y());
+		parent.line(start.getX(), start.getY(), end.getX(), end.getY());
 	}	
 	
 	/**

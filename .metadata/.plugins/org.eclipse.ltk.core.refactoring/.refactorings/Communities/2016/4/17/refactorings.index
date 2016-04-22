@@ -12,3 +12,6 @@
 1461200674483	Rename local variable 'currentNode'
 1461200867113	Rename local variable 'nodeName'
 1461262183914	Rename local variable 'edgeIt'
+1461281496452	Rename local variable 'it'
+1461282706767	Rename method 'x'
+1461282754140	Rename method 'y'

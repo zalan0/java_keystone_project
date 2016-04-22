@@ -9,6 +9,8 @@ import java.util.LinkedList;
 import java.util.Queue;
 import java.util.Set;
 
+import visualization.Coordinate;
+
 /**
  * Utility class of methods for graphs.
  * @author zalan0
@@ -156,55 +158,6 @@ public class Graphs {
 		return levels;
 	}
 	
-	public static ArrayList<HashSet<Vertex>> shortestRoutesBFS2
-	(Vertex start, Vertex finish) {
-		if(start.equals(finish)) return null;
-		// initialize queue, visited, and levels array
-		ArrayList<HashSet<Vertex>> levels = new ArrayList<HashSet<Vertex>>();
-		Queue<Vertex> currentLevel = new LinkedList<Vertex>();
-		Queue<Vertex> nextLevel = new LinkedList<Vertex>();
-		HashSet<Vertex> visited = new HashSet<Vertex>();
-		
-		// enqueue start onto queue and add to visited and levels
-		currentLevel.add(start);
-		visited.add(start);
-		levels.add(new HashSet<Vertex>(Arrays.asList(start)));
-		
-		//while queue is not empty, do stuff...
-		while(!currentLevel.isEmpty()) {
-			//dequeue node curr from front of queue and increment level
-			Vertex curr = currentLevel.poll();
-			
-			// for each of curr's neighbors, n, not in visited set
-			Vertex[] neighbors = curr.getNeighbors();
-			for(Vertex n: neighbors) {
-				
-				if(!visited.contains(n)) {
-					
-					// add n to visited set
-					visited.add(n);
-					
-					// engueue n onto queue
-					nextLevel.add(n);
-				}
-			}
-			
-			// when the currentLevel queue is empty, swap it with the nextLevel 
-			// queue and add that to the levels array
-			if(currentLevel.isEmpty()) {
-				if(!nextLevel.isEmpty()) 
-					levels.add(new HashSet<Vertex>(nextLevel));
-				currentLevel.addAll(nextLevel);
-				nextLevel.clear();
-			}
-			
-			// return the mess when we are done with the finish node
-			return levels;
-		}
-		return null;
-	}
-
-	
 	/**
 	 * Method that takes the output from the shortestRoutesBFS method and finds the number of
 	 * paths that travel through each node.
@@ -317,7 +270,7 @@ public class Graphs {
 				
 			}
 		}
-		System.out.println(flowMap);
+//		System.out.println(flowMap);
 		// increment each edge's flow
 		Iterator<Edge> edgeIt = flowMap.keySet().iterator();
 		while(edgeIt.hasNext()) {
@@ -327,7 +280,7 @@ public class Graphs {
 	}
 	
 	/**
-	 * Computes the betweeness of all edges in a graph.
+	 * Computes the betweenness of all edges in a graph.
 	 * 
 	 * @param graph
 	 */
@@ -336,39 +289,30 @@ public class Graphs {
 		while(i.hasNext()) {
 			int nodeName = i.next();
 			Vertex currentNode = graph.getVertex(nodeName);
-			System.out.println(currentNode);
+//			System.out.println(currentNode);
 			ArrayList<HashSet<Vertex>> levels = shortestRoutesBFS(currentNode);
-			System.out.println(levels);
+//			System.out.println(levels);
 			HashMap<Vertex, Integer> paths = countShortestPaths(levels);
-			System.out.println(paths);
+//			System.out.println(paths);
 			calculateEdgeFlow(levels, paths);
 		}
 	}
 
-	/**
-	 * Computes the betweeness of all edges in a graph.
-	 * 
-	 * @param graph
-	 */
-	public static void computeFlow2(Graph graph) {
-		Iterator<Integer> i = graph.getVerticeIterator();
-		while(i.hasNext()) {
-			int startName = i.next();
-			Vertex start = graph.getVertex(startName);
-			
-			Iterator<Integer> j = graph.getVerticeIterator();
-			while(j.hasNext()){
-				int finishName  = j.next();
-				if(startName != finishName) {
-					Vertex finish = graph.getVertex(finishName);
-					ArrayList<HashSet<Vertex>> levels = shortestRoutesBFS2(start, finish);
-					HashMap<Vertex, Integer> paths = countShortestPaths(levels);
-					calculateEdgeFlow(levels, paths);
-				}
+	public static Edge removeHighestBetweenness(Graph graph) {
+		Iterator<Edge> eIt = graph.getEdges().values().iterator();
+		Edge highestBetweenness = eIt.next();
+		while(eIt.hasNext()) {
+			Edge edge = eIt.next();
+			if(edge.getFlow() > highestBetweenness.getFlow()) {
+				highestBetweenness = edge;
 			}
 		}
+		HashSet<Vertex> ends = highestBetweenness.getEnds();
+		Iterator<Vertex> vIt = ends.iterator();
+		vIt.next().removeEdge(highestBetweenness);
+		vIt.next().removeEdge(highestBetweenness);
+		return highestBetweenness;
 	}
-
 	
 	/**
 	 * Checks for unconnected portions of the graph.
@@ -405,11 +349,39 @@ public class Graphs {
 	 */
 	public static void setLocations(HashSet<HashSet<Vertex>> connected) {
 		//TODO!!!
-		// iterate through sets
+		HashMap<Double, HashSet<Vertex>> sizes = new HashMap<Double, HashSet<Vertex>>();
+		HashMap<Double, Float> radii = new HashMap<Double, Float>();
+		HashMap<Double, Coordinate> coords = new HashMap<Double, Coordinate>();
+		LinkedList<Double> order = new LinkedList<Double>();
 		
-		// for each sub-set of vertices calculate percent of screen that will be used
-		// by ratio of size.
+		// set percent
+		
+		// find radii
+		
+		// set order largest to smallest
+		
+		// set coords
+		// for each member of order
+		
+			// pick random coord
+			
+			// move so that all of radius in inside screen
+		
+			// for each member of order larger that current
+		
+				// check for conflicts and move accordingly
 	}
+	
+	public static void girvanNewman(Graph graph, int iterations) {
+		for(int iteration = 0; iteration < iterations; iteration++) {
+			computeFlow(graph);
+			removeHighestBetweenness(graph);
+			setLocations(findConnectedness(graph));
+		}
+		
+		
+	}
+	
 }
 
 
