@@ -2,7 +2,6 @@ package graph;
 
 import java.util.ArrayList;
 import java.util.Arrays;
-import java.util.Collections;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.Iterator;
@@ -10,7 +9,6 @@ import java.util.LinkedList;
 import java.util.Queue;
 import java.util.Set;
 
-import processing.core.PApplet;
 import visualization.Coordinate;
 
 /**
@@ -353,10 +351,9 @@ public class Graphs {
 			Graph graph) {
 		//TODO!!!
 		HashMap<Double, HashSet<Vertex>> sizes = new HashMap<Double, HashSet<Vertex>>();
-		HashMap<Double, Float> radii = new HashMap<Double, Float>();
+		HashMap<Double, Double> radii = new HashMap<Double, Double>();
 		HashMap<Double, Coordinate> coords = new HashMap<Double, Coordinate>();
 		LinkedList<Double> order = new LinkedList<Double>();
-		PApplet parent = graph.getParent();
 		
 		// set percent
 		Iterator<HashSet<Vertex>> i = connected.iterator();
@@ -371,39 +368,27 @@ public class Graphs {
 		for(double percent: order) {
 			int width = graph.getParent().width;
 			int height = graph.getParent().height;
-			float radius;
+			double radius;
 			if(width > height) {
-				radius = (float) ((percent * height) / 2.0f);
+				radius = (percent * height) / 2.0d;
 			} else {
-				radius = (float) ((percent * width) / 2.0f);
+				radius = (percent * width) / 2.0d;
 			}
 			radii.put(percent, radius);
 		}
 		
 		// set order largest to smallest
-		Collections.sort(order, Collections.reverseOrder());
 		
 		// set coords
 		// for each member of order
-		for(int index = 0; index < order.size(); index++) {
-			double percent = order.get(index);
-			float radius = radii.get(percent);
-			
+		
 			// pick random coord
-			float x = parent.random(radius, parent.width - radius);
-			float y = parent.random(radius, parent.height - radius);
-			Coordinate coord = new Coordinate(x, y);
+			
+			// move so that all of radius in inside screen
 		
 			// for each member of order larger that current
-			for(int lIndex = 0; lIndex < index; lIndex++){
-				double checkPercent = order.get(lIndex);
-				Coordinate checkCoord = coords.get(checkPercent);
-				float checkRadius = radii.get(checkPercent);
-			
+		
 				// check for conflicts and move accordingly
-				if()
-			}
-		}
 	}
 	
 	public static void girvanNewman(Graph graph, int iterations) {

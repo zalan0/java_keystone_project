@@ -353,7 +353,7 @@ public class Graphs {
 			Graph graph) {
 		//TODO!!!
 		HashMap<Double, HashSet<Vertex>> sizes = new HashMap<Double, HashSet<Vertex>>();
-		HashMap<Double, Float> radii = new HashMap<Double, Float>();
+		HashMap<Double, Double> radii = new HashMap<Double, Double>();
 		HashMap<Double, Coordinate> coords = new HashMap<Double, Coordinate>();
 		LinkedList<Double> order = new LinkedList<Double>();
 		PApplet parent = graph.getParent();
@@ -385,24 +385,17 @@ public class Graphs {
 		
 		// set coords
 		// for each member of order
-		for(int index = 0; index < order.size(); index++) {
-			double percent = order.get(index);
+		for(double percent: order) {
 			float radius = radii.get(percent);
-			
 			// pick random coord
 			float x = parent.random(radius, parent.width - radius);
-			float y = parent.random(radius, parent.height - radius);
-			Coordinate coord = new Coordinate(x, y);
+			
+			// move so that all of radius in inside screen
 		
 			// for each member of order larger that current
-			for(int lIndex = 0; lIndex < index; lIndex++){
-				double checkPercent = order.get(lIndex);
-				Coordinate checkCoord = coords.get(checkPercent);
-				float checkRadius = radii.get(checkPercent);
-			
+		
 				// check for conflicts and move accordingly
-				if()
-			}
+			
 		}
 	}
 	
