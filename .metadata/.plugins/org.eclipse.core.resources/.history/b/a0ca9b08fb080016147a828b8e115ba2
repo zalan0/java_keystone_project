@@ -55,7 +55,8 @@ public class Graphs {
 			if(curr.equals(goal)) return parent;
 			
 			// for each of curr's neighbors, n, not in visited set
-			for(Vertex n: curr.getNeighbors()) {
+			Vertex[] neighbors = curr.getNeighbors();
+			for(Vertex n: neighbors) {
 				if(!visited.contains(n)) {
 					// add n to visited set
 					visited.add(n);
@@ -94,7 +95,8 @@ public class Graphs {
 			Vertex curr = queue.poll();
 			
 			// for each of curr's neighbors, n, not in visited set
-			for(Vertex n: curr.getNeighbors()) {
+			Vertex[] neighbors = curr.getNeighbors();
+			for(Vertex n: neighbors) {
 				if(!visited.contains(n)) {
 					// add n to visited set
 					visited.add(n);
@@ -133,7 +135,8 @@ public class Graphs {
 			Vertex curr = currentLevel.poll();
 			
 			// for each of curr's neighbors, n, not in visited set
-			for(Vertex n: curr.getNeighbors()) {
+			Vertex[] neighbors = curr.getNeighbors();
+			for(Vertex n: neighbors) {
 				
 				if(!visited.contains(n)) {
 					
@@ -402,53 +405,11 @@ public class Graphs {
 //			}
 //		}  // the above is not working...  trying something else
 		
-		PApplet parent = graph.getParent();
-		final int PUSH = 10;
-		final int PULL = 10;
-		final int INNER_BOUND = 5;
-		final int OUTER_BOUND = 25;
-		
 		// find most connected node
-		Iterator<Integer> nodeNames = graph.getVerticeIterator();
-		int maxName = -1;
-		int maxNeighbors = -1;
-		while(nodeNames.hasNext()) {
-			int currentName = nodeNames.next();
-			if(graph.getVertex(currentName).getEdges().size() > maxNeighbors) {
-				maxName = currentName;
-				maxNeighbors = graph.getVertex(currentName).getEdges().size();
-			}
-		}
 		
 		// set that in the middle
-		Vertex maxNode = graph.getVertex(maxName);
-		maxNode.setX(parent.width / 2.0f);
-		maxNode.setY(parent.height / 2.0f);
 		
-		// iterate through all vertices
-		HashSet<Vertex> vertices = new HashSet<Vertex>(graph.getVertices().values());
-		Iterator<Vertex> itI = vertices.iterator();
-		while(itI.hasNext()) {
-			Vertex currentNode = itI.next();
-			
-			// and iterate again
-			Iterator<Vertex> itJ = vertices.iterator();
-			while(itJ.hasNext()) {
-				Vertex compared = itJ.next();
-				
-				// find angle of compared from currentNode
-				
-				// pull neighbors closer in, upto a certain distance
-				if(currentNode.getNeighbors().contains(compared)){
-					
-				} else { // push away all non-neighbors to a certain point
-					
-				}
-				
-				
-			
-			}
-		}
+		// starting with
 	}
 	
 	public static void girvanNewman(Graph graph, int iterations) {

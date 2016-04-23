@@ -55,7 +55,8 @@ public class Graphs {
 			if(curr.equals(goal)) return parent;
 			
 			// for each of curr's neighbors, n, not in visited set
-			for(Vertex n: curr.getNeighbors()) {
+			Vertex[] neighbors = curr.getNeighbors();
+			for(Vertex n: neighbors) {
 				if(!visited.contains(n)) {
 					// add n to visited set
 					visited.add(n);
@@ -94,7 +95,8 @@ public class Graphs {
 			Vertex curr = queue.poll();
 			
 			// for each of curr's neighbors, n, not in visited set
-			for(Vertex n: curr.getNeighbors()) {
+			Vertex[] neighbors = curr.getNeighbors();
+			for(Vertex n: neighbors) {
 				if(!visited.contains(n)) {
 					// add n to visited set
 					visited.add(n);
@@ -133,7 +135,8 @@ public class Graphs {
 			Vertex curr = currentLevel.poll();
 			
 			// for each of curr's neighbors, n, not in visited set
-			for(Vertex n: curr.getNeighbors()) {
+			Vertex[] neighbors = curr.getNeighbors();
+			for(Vertex n: neighbors) {
 				
 				if(!visited.contains(n)) {
 					
@@ -436,16 +439,10 @@ public class Graphs {
 			while(itJ.hasNext()) {
 				Vertex compared = itJ.next();
 				
-				// find angle of compared from currentNode
+				// push away all non-neighbors to a certain point
 				
+		
 				// pull neighbors closer in, upto a certain distance
-				if(currentNode.getNeighbors().contains(compared)){
-					
-				} else { // push away all non-neighbors to a certain point
-					
-				}
-				
-				
 			
 			}
 		}

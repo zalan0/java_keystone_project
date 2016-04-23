@@ -436,16 +436,10 @@ public class Graphs {
 			while(itJ.hasNext()) {
 				Vertex compared = itJ.next();
 				
-				// find angle of compared from currentNode
+				// push away all non-neighbors to a certain point
 				
+		
 				// pull neighbors closer in, upto a certain distance
-				if(currentNode.getNeighbors().contains(compared)){
-					
-				} else { // push away all non-neighbors to a certain point
-					
-				}
-				
-				
 			
 			}
 		}

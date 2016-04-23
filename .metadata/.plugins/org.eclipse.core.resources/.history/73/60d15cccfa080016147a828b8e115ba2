@@ -2,8 +2,6 @@ package graph;
 
 import java.util.HashSet;
 import java.util.Iterator;
-import java.util.LinkedList;
-
 import processing.core.*;
 import visualization.Coordinate;
 
@@ -78,14 +76,6 @@ public class Vertex {
 		return position.getY();
 	}
 	
-	public void setX(float x) {
-		position.setX(x);
-	}
-	
-	public void setY(float y) {
-		position.setY(y);
-	}
-	
 	/**
 	 * Adds an edge to the HashSet containing connected edges.
 	 * @param e The edge to add.
@@ -110,13 +100,15 @@ public class Vertex {
 	 * Returns an array of neighbor nodes
 	 * @return Vertex array of neighbors.
 	 */
-	public LinkedList<Vertex> getNeighbors() {
-		LinkedList<Vertex> ret = new LinkedList<Vertex>();
+	public Vertex[] getNeighbors() {
+		Vertex[] ret = new Vertex[edges.size()];
 		if(edges.size()>0) {
 			Iterator<Edge> i = edges.iterator();
+			int index = 0;
 			while(i.hasNext()) {
 				Edge e = i.next();
-				ret.add(e.getOther(this));
+				ret[index] = (e.getOther(this));
+				index++;
 			}
 		}
 		return ret;

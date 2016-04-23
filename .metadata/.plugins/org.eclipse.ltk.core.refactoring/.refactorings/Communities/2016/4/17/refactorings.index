@@ -15,3 +15,5 @@
 1461281496452	Rename local variable 'it'
 1461282706767	Rename method 'x'
 1461282754140	Rename method 'y'
+1461377857752	Rename local variable 'nodes'
+1461379500898	Change method 'getNeighbors'
