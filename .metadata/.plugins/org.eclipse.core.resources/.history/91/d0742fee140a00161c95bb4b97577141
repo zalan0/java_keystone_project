@@ -2,13 +2,11 @@ package graph;
 
 import java.util.ArrayList;
 import java.util.Arrays;
-import java.util.Collections;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.Iterator;
 import java.util.LinkedList;
 import java.util.Queue;
-import java.util.Set;
 
 import processing.core.PApplet;
 import visualization.Coordinate;
@@ -196,7 +194,7 @@ public class Graphs {
 	
 	/**
 	 * Method that takes the output from both the shortestRoutesBFS and numberOfShortestPaths
-	 * methods and finds the betweeness or flow for all edges in the graph.  This value is stored
+	 * methods and finds the betweenness or flow for all edges in the graph.  This value is stored
 	 * within the Edge Class.
 	 * 
 	 * @param levels ArrayList of HashSets - output from BFS search
@@ -269,7 +267,6 @@ public class Graphs {
 				
 			}
 		}
-//		System.out.println(flowMap);
 		// increment each edge's flow
 		Iterator<Edge> edgeIt = flowMap.keySet().iterator();
 		while(edgeIt.hasNext()) {
@@ -284,21 +281,18 @@ public class Graphs {
 	 * @param graph
 	 */
 	public static void computeFlow(Graph graph) {
-		Iterator<Integer> i = graph.getVerticeIterator();
+		Iterator<Integer> i = graph.getVertexIterator();
 		while(i.hasNext()) {
 			int nodeName = i.next();
 			Vertex currentNode = graph.getVertex(nodeName);
-//			System.out.println(currentNode);
 			ArrayList<HashSet<Vertex>> levels = shortestRoutesBFS(currentNode);
-//			System.out.println(levels);
 			HashMap<Vertex, Integer> paths = countShortestPaths(levels);
-//			System.out.println(paths);
 			calculateEdgeFlow(levels, paths);
 		}
 	}
 
 	public static Edge removeHighestBetweenness(Graph graph) {
-		Iterator<Edge> eIt = graph.getEdges().values().iterator();
+		Iterator<Edge> eIt = graph.getEdges().iterator();
 		Edge highestBetweenness = eIt.next();
 		while(eIt.hasNext()) {
 			Edge edge = eIt.next();
@@ -314,7 +308,7 @@ public class Graphs {
 	}
 	
 	/**
-	 * Checks for unconnected portions of the graph.
+	 * Groups connected portions of the graph.
 	 * 
 	 * @param graph
 	 * @return a Set of sets of connected nodes.
@@ -324,7 +318,7 @@ public class Graphs {
 		HashSet<Vertex> visited = new HashSet<Vertex>();
 		
 		// iterate every node in graph, skip if already visited
-		Iterator<Integer> i = graph.getVerticeIterator();
+		Iterator<Integer> i = graph.getVertexIterator();
 		while(i.hasNext()) {
 			int currentNodeName = i.next();
 			Vertex currentNode = graph.getVertex(currentNodeName);
@@ -341,30 +335,53 @@ public class Graphs {
 		}
 		return connected;
 	}
-	
+
 	/**
-	 * Set x and y coordinates for where the node will be displayed.
+	 * Set x and y coordinates for where the node will be displayed using the idea
+	 * of force-directed graph drawing.  No centering node.
+	 * 
 	 * @param graph Graph with vertices to move.
 	 */
 	public static void setLocations(Graph graph) {
-		//TODO!!!
 		PApplet parent = graph.getParent();
-		final float PUSH = 10;
-		final float PULL = 10;
-		final float INNER_BOUND = 5;
-		final float OUTER_BOUND = 1000;
+		final float PUSH = 1;
+		final float PULL = 1;
+		final float INNER_BOUND = 50;
+		final float OUTER_BOUND = 60;
 		
-		// find most connected node  // TODO consider using largest connected group too
-		Iterator<Integer> nodeNames = graph.getVerticeIterator();
-		int maxName = -1;
-		int maxNeighbors = -1;
-		while(nodeNames.hasNext()) {
-			int currentName = nodeNames.next();
-			if(graph.getVertex(currentName).getEdges().size() > maxNeighbors) {
-				maxName = currentName;
-				maxNeighbors = graph.getVertex(currentName).getEdges().size();
+		// iterate through all vertices
+		HashSet<Vertex> vertices = new HashSet<Vertex>(graph.getVertices().values());
+		Iterator<Vertex> itI = vertices.iterator();
+		while(itI.hasNext()) {
+			Vertex currentNode = itI.next();
+			// and iterate again
+			Iterator<Vertex> itJ = vertices.iterator();
+			while(itJ.hasNext()) {
+				Vertex compared = itJ.next();
+				if(!currentNode.equals(compared)){
+					pushPull(parent, PUSH, PULL, INNER_BOUND, OUTER_BOUND, currentNode, 
+							compared);
+				}
 			}
 		}
+	}
+	
+	/**
+	 * Set x and y coordinates for where the node will be displayed using the idea
+	 * of force-directed graph drawing centered on the node that has the most connections
+	 * within the largest community.
+	 * 
+	 * @param graph Graph with vertices to move.
+	 */
+	public static void setLocationsMaxNode(Graph graph) {
+		PApplet parent = graph.getParent();
+		final float PUSH = 1;
+		final float PULL = 1;
+		final float INNER_BOUND = 50;
+		final float OUTER_BOUND = 60;
+		
+		// find most connected node  
+		int maxName = findMaxNode(graph);
 		
 		// set that in the middle
 		Vertex maxNode = graph.getVertex(maxName);
@@ -375,58 +392,79 @@ public class Graphs {
 		// iterate through all vertices
 		HashSet<Vertex> vertices = new HashSet<Vertex>(graph.getVertices().values());
 		Iterator<Vertex> itI = vertices.iterator();
-//		while(itI.hasNext()) {
-//			Vertex currentNode = itI.next(); 	// keep the maximum node first (I know it will 
-												// be addressed twice). that might keep it more
-												// centered.
+		while(itI.hasNext()) {
 			
 			// and iterate again
 			Iterator<Vertex> itJ = vertices.iterator();
 			while(itJ.hasNext()) {
 				Vertex compared = itJ.next();
 				if(!currentNode.equals(compared) && !compared.equals(maxNode)){
-					float currentNodeX = currentNode.getX();
-					float currentNodeY = currentNode.getY();
-					float comparedX = compared.getX();
-					float comparedY = compared.getY();
-					
-					// find distance between
-					float deltaX = currentNodeX - comparedX;
-					float deltaY = currentNodeY - comparedY;
-					float distance = (float) (Math.sqrt(Math.pow(deltaX, 2)) + Math.pow(deltaY, 2));
-					
-					// pull neighbors closer in, up to a certain distance
-					if(currentNode.getNeighbors().contains(compared)){
-						if(distance < INNER_BOUND  || distance < PULL){
-							// push to INNER_BOUND distance
-							System.out.println("neighbor push");
-							Coordinate newComparedCoords = newPoint(currentNodeX, currentNodeY,
-									comparedX, comparedY, INNER_BOUND, distance, parent);
-							compared.setX(newComparedCoords.getX());
-							compared.setY(newComparedCoords.getY());
-						} else {
-							// pull closer by PULL
-							System.out.println("neighbor pull");
-							Coordinate newComparedCoords = newPoint(comparedX, -comparedY, 
-									currentNodeX, -currentNodeY, PULL, distance, parent);
-							compared.setX(newComparedCoords.getX());
-							compared.setY(newComparedCoords.getY());
-						}
-						
-					} else { // push away all non-neighbors to a certain point
-						if(distance < OUTER_BOUND) {
-							// push away by PUSH
-							System.out.println("non-neighbor push");
-							Coordinate newComparedCoords = newPoint(currentNodeX, currentNodeY, 
-									comparedX, comparedY, PUSH + distance, distance, parent);
-							compared.setX(newComparedCoords.getX());
-							compared.setY(newComparedCoords.getY());
-						}
-					}
+					pushPull(parent, PUSH, PULL, INNER_BOUND, OUTER_BOUND, currentNode, 
+							compared);
 				}
 			}
-//			if(itI.hasNext()) currentNode = itI.next();
-//		}
+			if(itI.hasNext()) currentNode = itI.next();
+		}
+	}
+
+	private static void pushPull(PApplet parent, final float PUSH, final float PULL, final float INNER_BOUND,
+			final float OUTER_BOUND, Vertex currentNode, Vertex compared) {
+		float currentNodeX = currentNode.getX();
+		float currentNodeY = currentNode.getY();
+		float comparedX = compared.getX();
+		float comparedY = compared.getY();
+		
+		// find distance between
+		float deltaX = currentNodeX - comparedX;
+		float deltaY = currentNodeY - comparedY;
+		float distance = (float) (Math.sqrt((deltaX*deltaX) + (deltaY*deltaY)));
+		
+		// pull neighbors closer in, up to a certain distance
+		if(currentNode.getNeighbors().contains(compared)){
+			if(distance < INNER_BOUND  || distance < PULL){
+				// push to INNER_BOUND distance
+				Coordinate newComparedCoords = newPoint(currentNodeX, currentNodeY,
+						comparedX, comparedY, INNER_BOUND, distance, parent);
+				compared.setX(newComparedCoords.getX());
+				compared.setY(newComparedCoords.getY());
+			} else {
+				// pull closer by PULL
+				Coordinate newComparedCoords = newPoint(comparedX, comparedY, 
+						currentNodeX, currentNodeY, PULL, distance, parent);
+				compared.setX(newComparedCoords.getX());
+				compared.setY(newComparedCoords.getY());
+			}
+			
+		} else { // push away all non-neighbors to a certain point
+			if(distance < OUTER_BOUND) {
+				// push away by PUSH
+				Coordinate newComparedCoords = newPoint(currentNodeX, currentNodeY, 
+						comparedX, comparedY, PUSH + distance, distance, parent);
+				compared.setX(newComparedCoords.getX());
+				compared.setY(newComparedCoords.getY());
+			}
+		}
+	}
+
+	private static int findMaxNode(Graph graph) {
+		int maxName = -1;
+		int maxNeighbors = -1;
+		HashSet<Vertex> largestGroup = new HashSet<Vertex>();
+		
+		// find largest group
+		HashSet<HashSet<Vertex>> connections = findConnectedness(graph);
+		for(HashSet<Vertex> connected: connections) {
+			if(connected.size() > largestGroup.size()) largestGroup = connected;
+		}
+		
+		// find most connected node in largest group
+		for(Vertex current: largestGroup) {
+			if(current.getEdges().size() > maxNeighbors) {
+				maxName = current.name();
+				maxNeighbors = current.getEdges().size();
+			}
+		}
+		return maxName;
 	}
 	
 	private static Coordinate newPoint(float x1, float y1, float x2, float y2, 
@@ -434,22 +472,22 @@ public class Graphs {
 		
 		float ratioOfDistances = distanceToMove/distanceBetweenPoints;
 		float newX = ((1 - ratioOfDistances) * x1 + ratioOfDistances * x2);
-		float newY = ((1 - ratioOfDistances) * y2 + ratioOfDistances * y1);
+		float newY = ((1 - ratioOfDistances) * y1 + ratioOfDistances * y2);
 		
 		// sanity check
-		if(newX < 0) newX = distanceToMove;
-		else if(newX > parent.width) newX = parent.width - distanceToMove;
-		if(newY < 0) newY = distanceToMove;
-		else if(newY < parent.height) newY = parent.height - distanceToMove;
+		if(newX < 0) newX = 10;
+		else if(newX > parent.width) newX = parent.width - 10;
+		if(newY < 0) newY = 10;
+		else if(newY > parent.height) newY = parent.height - 10;
 		
 		return new Coordinate(newX, newY);
 	}
 	
 	public static void girvanNewman(Graph graph, int iterations) {
 		for(int iteration = 0; iteration < iterations; iteration++) {
+			System.out.println("Girvan-Newman iteration: " + iteration);
 			computeFlow(graph);
 			removeHighestBetweenness(graph);
-//			setLocations(graph);
 		}
 	}
 }

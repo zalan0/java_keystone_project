@@ -2,13 +2,11 @@ package graph;
 
 import java.util.ArrayList;
 import java.util.Arrays;
-import java.util.Collections;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.Iterator;
 import java.util.LinkedList;
 import java.util.Queue;
-import java.util.Set;
 
 import processing.core.PApplet;
 import visualization.Coordinate;
@@ -196,7 +194,7 @@ public class Graphs {
 	
 	/**
 	 * Method that takes the output from both the shortestRoutesBFS and numberOfShortestPaths
-	 * methods and finds the betweeness or flow for all edges in the graph.  This value is stored
+	 * methods and finds the betweenness or flow for all edges in the graph.  This value is stored
 	 * within the Edge Class.
 	 * 
 	 * @param levels ArrayList of HashSets - output from BFS search
@@ -490,6 +488,16 @@ public class Graphs {
 			System.out.println("Girvan-Newman iteration: " + iteration);
 			computeFlow(graph);
 			removeHighestBetweenness(graph);
+			resetEdgeFlow(graph);
+		}
+	}
+
+	private static void resetEdgeFlow(Graph graph) {
+		// TODO Auto-generated method stub
+		Iterator<Edge> it = graph.getEdges().iterator();
+		while(it.hasNext()) {
+			Edge edge = it.next();
+			edge.resetFlow();
 		}
 	}
 }

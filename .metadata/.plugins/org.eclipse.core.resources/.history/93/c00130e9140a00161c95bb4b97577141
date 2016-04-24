@@ -92,9 +92,4 @@ public class Edge {
 		String ret = start.name() + "<-" + flow + "->"+ end.name();
 		return ret;
 	}
-
-	public void resetFlow() {
-		// TODO Auto-generated method stub
-		flow = 0;
-	}
 }
