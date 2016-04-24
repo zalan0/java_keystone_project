@@ -19,6 +19,19 @@ import graph.Vertex;
 
 public class GraphLoader {
 
+	public static void loadGraph(graph.Graph g, String filename) {
+		if(filename.contains(".adjacency_list")){
+			System.out.println("loading adjacency list");
+			loadAdjacencyListGraph(g, filename);
+		} else {
+			System.out.println("loading edge/edge list");
+			loadEdgeListGraph(g, filename);
+		}
+		System.out.println("Graph loaded");
+		System.out.println("Vertices: " + g.getVertexKeys().size() + 
+						 "  Edges: " + g.getEdges().size());
+	}
+	
 	/**
      * Loads graph with data from a file.
      * The file should consist of lines with 2 integers each, corresponding
@@ -46,7 +59,8 @@ public class GraphLoader {
         sc.close();
     }
 
-	private static void makeVerticesEdges(graph.Graph g, Set<Integer> seen, int vName1, int vName2) {
+	private static void makeVerticesEdges(graph.Graph g, Set<Integer> seen, 
+			int vName1, int vName2) {
 		Vertex v1;
 		Vertex v2;
 		
@@ -116,7 +130,7 @@ public class GraphLoader {
     	Iterator<Integer> i = adjacencyList.keySet().iterator();
     	while(i.hasNext()) {
     		int next = i.next();
-    		System.out.println(next + "  " + adjacencyList.get(next));
+//    		System.out.println(next + "  " + adjacencyList.get(next));
     	}
     	// done testing...
     	

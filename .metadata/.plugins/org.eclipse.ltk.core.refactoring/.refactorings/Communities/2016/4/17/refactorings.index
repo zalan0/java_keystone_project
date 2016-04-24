@@ -17,3 +17,5 @@
 1461282754140	Rename method 'y'
 1461377857752	Rename local variable 'nodes'
 1461379500898	Change method 'getNeighbors'
+1461451583195	Extract method 'findMaxNode'
+1461454747476	Rename resource 'band_friend_network.txt'

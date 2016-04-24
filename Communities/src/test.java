@@ -11,7 +11,7 @@ import graph.Vertex;
 import util.GraphLoader;
 
 public class test {
-	static String filename = "data/very_small_test.txt";
+	static String filename = "data/facebook_1000.txt";
 
 	public static void main(String[] args) {
 		// TODO Auto-generated method stub
@@ -26,7 +26,10 @@ public class test {
 		System.out.println("Graph loaded!");
 		g.printGraph();
 		
-		Graphs.girvanNewman(g, 1);
+		Graphs.girvanNewman(g, 100);
+		Graphs.setLocationsMaxNode(g);
+		
+//		g.printGraph();
 		
 //		HashSet<HashSet<Vertex>> connected = Graphs.findConnectedness(g);
 //		Iterator i = connected.iterator();

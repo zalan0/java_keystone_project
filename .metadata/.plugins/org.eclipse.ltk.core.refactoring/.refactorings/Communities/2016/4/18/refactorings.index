@@ -1,0 +1,3 @@
+1461461025155	Rename method 'getVerticeIterator'
+1461463771661	Rename method 'setLocations'
+1461463844808	Extract method 'pushPull'

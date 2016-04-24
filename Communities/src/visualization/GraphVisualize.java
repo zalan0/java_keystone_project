@@ -4,6 +4,7 @@ import java.util.Iterator;
 
 import graph.Edge;
 import graph.Graph;
+import graph.Graphs;
 import graph.Vertex;
 import processing.core.PApplet;
 import util.GraphLoader;
@@ -17,14 +18,16 @@ import util.GraphLoader;
 public class GraphVisualize extends PApplet{
 	
 	private Graph graph;
-	final static String graphFile = "data/very_small_test.txt"; // graph to load
+	private final static String graphFile = 
+			"data/band_friend_network.adjacency_list"; // graph to load
+			
+	private boolean pause = false;
 	
 	/**
 	 * Main method to run the applet as an application.
 	 */
 	public static void main(String args[] ) {
-		PApplet.main(new String[] {"--present", "visualization.GraphVisualize"});
-		
+		PApplet.main(new String[] {"visualization.GraphVisualize"});
 	}
 	
 	/**
@@ -33,8 +36,8 @@ public class GraphVisualize extends PApplet{
 	 * Sets size of canvas
 	 */
 	public void settings() {
-		fullScreen();
-//		size(600,600);
+//		fullScreen();	// use the entire screen
+		size(800,600);	// use a specific size of window
 	}
 	
 	/**
@@ -44,8 +47,18 @@ public class GraphVisualize extends PApplet{
 	 */
 	public void setup() {
 		graph = new Graph(this);
-		GraphLoader.loadEdgeListGraph(graph, graphFile);
-//		GraphLoader.loadAdjacencyListGraph(graph, graphFile);
+		
+		GraphLoader.loadGraph(graph, graphFile);
+		
+		Graphs.girvanNewman(graph, 50);
+		
+		// pre-start the positioning of the nodes
+//		System.out.println("Starting setLocations");
+//		for(int i = 0; i < 100; i++) {
+//			System.out.println(i);
+//			Graphs.setLocations(graph);
+//		}
+//		System.out.println("finished setLocations");
 	}
 	
 	/**
@@ -53,17 +66,25 @@ public class GraphVisualize extends PApplet{
 	 */
 	public void draw() {
 		background(127);
-		Iterator<Integer> i = graph.getVerticeIterator();
+		Iterator<Edge> e = graph.getEdges().iterator();
+		while(e.hasNext()) {
+			Edge edge = e.next();
+			edge.draw();
+		}
+		Iterator<Integer> i = graph.getVertexIterator();
 		while(i.hasNext()) {
 			int vName = i.next();
 			Vertex v = graph.getVertex(vName);
+//			Iterator<Edge> e = v.getEdges().iterator(); // draw edges here 
+//			while(e.hasNext()) {						// to see which edges
+//				Edge edge = e.next();					// have been removed
+//				edge.draw();							// by girvanNewman()
+//			}
 			v.draw();
-			Iterator<Edge> e = v.getEdges().iterator();
-			while(e.hasNext()) {
-				Edge edge = e.next();
-				edge.draw();
-			}
-//			v.update(); // added to make the graph move!
+
 		}
+		
+		if(!pause) Graphs.setLocations(graph);
+		if(mousePressed) pause = !pause;
 	}
 }

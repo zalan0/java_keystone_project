@@ -2,13 +2,10 @@
 <qualifiedTypeNameHistroy>
 <fullyQualifiedTypeName name="Graph.Vertex"/>
 <fullyQualifiedTypeName name="visualization.GraphVisualize"/>
-<fullyQualifiedTypeName name="graph.Graph"/>
 <fullyQualifiedTypeName name="java.util.Vector"/>
 <fullyQualifiedTypeName name="com.sun.javafx.geom.Edge"/>
 <fullyQualifiedTypeName name="java.util.Queue"/>
 <fullyQualifiedTypeName name="java.util.LinkedList"/>
-<fullyQualifiedTypeName name="graph.Graphs"/>
-<fullyQualifiedTypeName name="java.lang.Integer"/>
 <fullyQualifiedTypeName name="java.util.HashMap"/>
 <fullyQualifiedTypeName name="util.GraphLoader"/>
 <fullyQualifiedTypeName name="java.util.HashSet"/>
@@ -19,4 +16,8 @@
 <fullyQualifiedTypeName name="graph.Vertex"/>
 <fullyQualifiedTypeName name="java.util.Collections"/>
 <fullyQualifiedTypeName name="processing.core.PApplet"/>
+<fullyQualifiedTypeName name="graph.Graphs"/>
+<fullyQualifiedTypeName name="java.lang.Integer"/>
+<fullyQualifiedTypeName name="java.util.Set"/>
+<fullyQualifiedTypeName name="graph.Graph"/>
 </qualifiedTypeNameHistroy>

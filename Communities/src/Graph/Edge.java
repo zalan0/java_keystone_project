@@ -16,8 +16,6 @@ import processing.core.PApplet;
  */
 public class Edge {
 	private double flow;
-//	private Vertex start;
-//	private Vertex end;
 	private PApplet parent;
 	private HashSet<Vertex> ends;
 	
@@ -29,8 +27,6 @@ public class Edge {
 	 * @param parent PApplet that will draw the graph.
 	 */
 	public Edge(Vertex start, Vertex finish, PApplet parent) {
-//		this.start = start;
-//		this.end = finish;
 		flow = 0.0d;
 		this.parent = parent;
 		ends = new HashSet<Vertex>();
@@ -45,59 +41,20 @@ public class Edge {
 		flow += amount;
 	}
 	
+	/**
+	 * Returns the amount of flow designated to this edge.
+	 */
 	public double getFlow() {
 		return flow;
 	}
-
-//	/**
-//	 * Gets the class variable start 
-//	 * @return Vertex that starts this edge
-//	 */
-//	public Vertex getStart() {
-//		return start;
-//	}
-//	
-//	/**
-//	 * Gets the class variable end
-//	 * @return Vertex that ends this edge
-//	 */
-//	public Vertex getEnd() {
-//		return end;
-//	}
-//	
-//	/**
-//	 * Gets the class variable weight
-//	 * @return Double that represents the weight of this edge
-//	 */
-//	public double getWeight() {
-//		return weight;
-//	}
 	
+	/**
+	 * Returns a set of vertices that difine this edge.
+	 */
 	public HashSet<Vertex> getEnds() {
 		return ends;
 	}
 	
-	/**
-	 * Draws a line from the start Vertex to the end Vertex
-	 */
-	public void draw() {
-		Iterator<Vertex> e = ends.iterator();
-		Vertex start = e.next();
-		Vertex end = e.next();
-		parent.line(start.getX(), start.getY(), end.getX(), end.getY());
-	}	
-	
-	/**
-	 * A string representation of this edge
-	 */
-	public String toString() {
-		Iterator<Vertex> e = ends.iterator();
-		Vertex start = e.next();
-		Vertex end = e.next();
-		String ret = start.name() + "<-" + flow + "->"+ end.name();
-		return ret;
-	}
-
 	/**
 	 * Return the Vertex that is on the other end of the provided vertex
 	 * 
@@ -114,6 +71,25 @@ public class Edge {
 			return start;
 		}
 	}
-
-
+	
+	/**
+	 * Draws a line from the start Vertex to the end Vertex
+	 */
+	public void draw() {
+		Iterator<Vertex> e = ends.iterator();
+		Vertex start = e.next();
+		Vertex end = e.next();
+		parent.line(start.getX(), start.getY(), end.getX(), end.getY());
+	}	
+	
+	/**
+	 * A string representation of this edge for testing purposes.
+	 */
+	public String toString() {
+		Iterator<Vertex> e = ends.iterator();
+		Vertex start = e.next();
+		Vertex end = e.next();
+		String ret = start.name() + "<-" + flow + "->"+ end.name();
+		return ret;
+	}
 }

@@ -16,19 +16,17 @@ import visualization.Coordinate;
  * this vertex on the visualization.
  */
 public class Vertex {
-	private int name;
-	private PApplet parent;
-//	private float positionX;
-//	private float positionY;
-	private Coordinate position;
-	private HashSet<Edge> edges;
+	private int name;  // the name of the node, represented as a number
+	private PApplet parent; // information used for visualization
+	private Coordinate position; // the position on the screen that this node is draw at
+	private HashSet<Edge> edges; // a set of the edges that connect this node to others
 	private final static float RADIUS = 5;  // size of circle to draw
-	private final static float VELOCITY = 1;  // how fast the circle moves
-	private int direction; // direction that the circle moves
 	
-	private String gender;
+	@SuppressWarnings("unused") 
+	private String gender; // for future expansion
 	private int grade;
-	private String instrument;
+	@SuppressWarnings("unused")
+	private String instrument; // for future expansion
 	
 	/**
 	 * Constructs a vertex.
@@ -40,13 +38,22 @@ public class Vertex {
 		this(name, "", -1, "", parent);
 	}
 	
-	public Vertex(int name, String gender, int grade, String instrument, PApplet parent) {
+	/**
+	 * Constructs a vertex.  Places much more information into each node.
+	 * 
+	 * @param name Integer representing the name of the node.
+	 * @param gender Gender of Student M or F.
+	 * @param grade Grade that the student is in.
+	 * @param instrument Band instrument played by student.
+	 * @param parent PApplet that the node will be drawn on.
+	 */
+	public Vertex(int name, String gender, int grade, String instrument, 
+			PApplet parent) {
 		this.name = name;
 		this.parent = parent;
 		edges = new HashSet<Edge>();
 		float x = parent.random(RADIUS, parent.width - RADIUS);
 		float y = parent.random(RADIUS, parent.height - RADIUS);
-		direction = Math.round(parent.random((float) 0.5, (float) 8.5));
 		position = new Coordinate(x, y);
 		
 		this.gender = gender;
@@ -94,6 +101,12 @@ public class Vertex {
 		edges.add(e);
 	}
 	
+	/**
+	 * Removes an edge from the set of edges. Used for the Girvan-Newman
+	 * community algorithm.
+	 * 
+	 * @param e Edge to be removed.
+	 */
 	public void removeEdge(Edge e) {
 		edges.remove(e);
 	}
@@ -143,57 +156,20 @@ public class Vertex {
 	 * upper right.
 	 */
 	public void draw() {
+		if(grade == 7) parent.fill(153, 204, 255);
+		else if(grade == 8) parent.fill(255, 255, 0);
+		else parent.fill(255);
 		parent.ellipse(position.getX(), position.getY(), RADIUS, RADIUS);
 		
 		parent.textSize(RADIUS * 2);
 		parent.text(name, position.getX() + RADIUS, position.getY() - RADIUS);
-//		String coords = "" + positionX + ", " + positionY;
-//		parent.text(coords, positionX + RADIUS, positionY - RADIUS * 4);
+//		String coords = "" + position.getX() + ", " + position.getY();
+//		parent.text(coords, position.getX() + RADIUS, position.getY() - RADIUS * 4);
 	}
 
 	/**
-	 * Updates the position of this node in relation to its velocity
-	 * and direction.
+	 * Returns a string representation of the node for testing purposes.
 	 */
-	public void update() {
-//		int direction = Math.round(parent.random((float) 0.5, (float) 8.5));
-		switch(direction) {
-			// right
-			case 1: position.setX(position.getX() + VELOCITY);
-					break;
-			// right and down		
-			case 2: position.setX(position.getX() + VELOCITY);
-					position.setY(position.getY() + VELOCITY);
-					break;
-			// down
-			case 3: position.setY(position.getY() + VELOCITY);
-					break;
-			// left and down
-			case 4: position.setX(position.getX() - VELOCITY);
-					position.setY(position.getY() + VELOCITY);
-					break;
-			// left
-			case 5: position.setX(position.getX() - VELOCITY);
-					break;
-			// left and up
-			case 6: position.setX(position.getX() - VELOCITY);
-					position.setY(position.getY() - VELOCITY);
-					break;
-			// up
-			case 7: position.setY(position.getY() - VELOCITY);
-					break;
-			// right and up
-			case 8: position.setX(position.getX() + VELOCITY);
-					position.setY(position.getY() - VELOCITY);
-					break;
-			default: break;
-		}
-		if(position.getY() > parent.height - RADIUS) position.setY(RADIUS);
-		if(position.getY() < RADIUS) position.setY(parent.height - RADIUS);
-		if(position.getX() > parent.width - RADIUS) position.setX(RADIUS);
-		if(position.getX() < RADIUS) position.setX(parent.width - RADIUS);
-	}
-	
 	public String toString() {
 		String ret = "";
 //		ret += "Vertex[";

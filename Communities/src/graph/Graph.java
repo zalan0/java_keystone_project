@@ -1,9 +1,9 @@
 package graph;
 
-import java.util.Arrays;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.Iterator;
+import java.util.Set;
 
 import processing.core.PApplet;
 
@@ -16,7 +16,7 @@ import processing.core.PApplet;
  */
 public class Graph {
 	private HashMap<Integer, Vertex> vertices;
-	private HashMap<HashSet<Integer>, Edge> edges;
+	private HashSet<Edge> edges;
 	private PApplet parent;
 	
 	/**
@@ -33,7 +33,7 @@ public class Graph {
 	 */
 	public Graph(PApplet p) {
 		vertices = new HashMap<Integer, Vertex>();
-		edges = new HashMap<HashSet<Integer>, Edge>();
+		edges = new HashSet<Edge>();
 		parent = p;
 	}
 	
@@ -68,21 +68,8 @@ public class Graph {
 		if(!vertices.containsKey(start)) this.addVertex(start);
 		if(!vertices.containsKey(finish)) this.addVertex(finish);
 		
-		HashSet<Integer> edgeSet = 
-				new HashSet<Integer>(Arrays.asList(start.name(), finish.name()));
-		Edge e;
-		// if new edge
-		if(!edges.containsKey(edgeSet)) {
-			// create edge
-			e = new Edge(start, finish, parent);
-			
-			// add to class set edges
-			edges.put(edgeSet, e);
-			
-		} else {
-			// find edge
-			e = edges.get(edgeSet);
-		}
+		Edge e = new Edge(start, finish, parent);
+		edges.add(e);
 		// add to set of edges in Vertex start
 		start.addEdge(e);
 		// and to finish, since this graph is undirected
@@ -112,7 +99,7 @@ public class Graph {
 	 * Gets the Class variable vertices
 	 * 
 	 * @return HashMap mapping an integer representation of a node's name
-	 * 		   to the node.
+	 * 		   to the node itself.
 	 */
 	public HashMap<Integer, Vertex> getVertices() {
 		return vertices;
@@ -123,16 +110,26 @@ public class Graph {
 	 * 
 	 * @return HashSet of edges
 	 */
-	public HashMap<HashSet<Integer>, Edge> getEdges() {
+	public HashSet<Edge> getEdges() {
 		return edges;
 	}
 	
 	/**
 	 * Provide a means to iterate through the vertices.
+	 * 
 	 * @return An Iterator of integers
 	 */
-	public Iterator<Integer> getVerticeIterator() {
+	public Iterator<Integer> getVertexIterator() {
 		return vertices.keySet().iterator();
+	}
+	
+	/**
+	 * The vertices are stored as a map of integer(name) => Vertex object.  
+	 * 
+	 * @return The integer name associated with the Vertex.
+	 */
+	public Set<Integer> getVertexKeys() {
+		return vertices.keySet();
 	}
 	
 	/**
@@ -156,7 +153,7 @@ public class Graph {
 	 */
 	public void printEdges() {
 		System.out.println("Edges");
-		Iterator<Edge> i = edges.values().iterator();
+		Iterator<Edge> i = edges.iterator();
 		while(i.hasNext()) {
 			Edge e = i.next();
 			System.out.println(e.toString());
