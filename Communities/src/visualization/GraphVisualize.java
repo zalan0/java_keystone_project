@@ -19,7 +19,7 @@ public class GraphVisualize extends PApplet{
 	
 	private Graph graph;
 	private final static String graphFile = 
-			"data/band_friend_network.adjacency_list"; // graph to load
+			"data/band_friend_network.gve"; // graph to load
 			
 	private boolean pause = false;
 	
@@ -50,15 +50,8 @@ public class GraphVisualize extends PApplet{
 		
 		GraphLoader.loadGraph(graph, graphFile);
 		
-		Graphs.girvanNewman(graph, 50);
+		Graphs.girvanNewman(graph, 35);
 		
-		// pre-start the positioning of the nodes
-//		System.out.println("Starting setLocations");
-//		for(int i = 0; i < 100; i++) {
-//			System.out.println(i);
-//			Graphs.setLocations(graph);
-//		}
-//		System.out.println("finished setLocations");
 	}
 	
 	/**
@@ -66,10 +59,10 @@ public class GraphVisualize extends PApplet{
 	 */
 	public void draw() {
 		background(127);
-		Iterator<Edge> e = graph.getEdges().iterator();
-		while(e.hasNext()) {
-			Edge edge = e.next();
-			edge.draw();
+		Iterator<Edge> e = graph.getEdges().iterator();	// draw edges here
+		while(e.hasNext()) {							// for faster frame-rates
+			Edge edge = e.next();						// and to see all of the
+			edge.draw();								// edges in graph.
 		}
 		Iterator<Integer> i = graph.getVertexIterator();
 		while(i.hasNext()) {

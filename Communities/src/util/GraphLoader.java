@@ -13,14 +13,28 @@ import java.util.HashSet;
 import java.util.Iterator;
 import java.util.Scanner;
 import java.util.Set;
-
-import graph.Edge;
 import graph.Vertex;
 
 public class GraphLoader {
 
+	/**
+	 * Loads a graph with data from a file.
+	 * 
+	 * The file can be in one of two formats:
+	 * 1) a list of edges, such that each line contains two numbers
+	 * separated by a space.  This file can have any name and extension.
+	 * 
+	 * 2) An adjacency list of band students.  Format must be thus: each line
+	 * starts with a number to represent the student's name, followed by a grade number,
+	 * followed by the name of the instrument that they play, then a list of their 
+	 * friends.  All data points are seperated by a space and the filename must end
+	 * with the extension ".gve"
+	 * 
+	 * @param g Graph to load data into
+	 * @param filename what the file is called.
+	 */
 	public static void loadGraph(graph.Graph g, String filename) {
-		if(filename.contains(".adjacency_list")){
+		if(filename.contains(".gve")){
 			System.out.println("loading adjacency list");
 			loadAdjacencyListGraph(g, filename);
 		} else {
@@ -37,7 +51,7 @@ public class GraphLoader {
      * The file should consist of lines with 2 integers each, corresponding
      * to a "from" vertex and a "to" vertex.
      */ 
-    public static void loadEdgeListGraph(graph.Graph g, String filename) {
+    private static void loadEdgeListGraph(graph.Graph g, String filename) {
         Set<Integer> seen = new HashSet<Integer>();
         Scanner sc;
         try {
@@ -59,6 +73,9 @@ public class GraphLoader {
         sc.close();
     }
 
+    /**
+     * Helper method for loadEdgeListGraph
+     */
 	private static void makeVerticesEdges(graph.Graph g, Set<Integer> seen, 
 			int vName1, int vName2) {
 		Vertex v1;
@@ -91,8 +108,7 @@ public class GraphLoader {
 	 * @param graph empty Graph file.
 	 * @param filename File that holds the graph
 	 */
-    public static void loadAdjacencyListGraph(graph.Graph graph, String filename){
-    	//TODO revisit this.  Can I do this without using TempNode?
+    private static void loadAdjacencyListGraph(graph.Graph graph, String filename){
     	HashMap<Integer, TempNode> adjacencyList = new HashMap<Integer, TempNode>();
     	Scanner fileScanner;
     	try {
@@ -125,14 +141,6 @@ public class GraphLoader {
     		lineScanner.close();
     		
     	}
-    	
-    	// this for testing...
-    	Iterator<Integer> i = adjacencyList.keySet().iterator();
-    	while(i.hasNext()) {
-    		int next = i.next();
-//    		System.out.println(next + "  " + adjacencyList.get(next));
-    	}
-    	// done testing...
     	
 		Iterator<Integer> keys = adjacencyList.keySet().iterator();
     	while(keys.hasNext()) {

@@ -11,23 +11,22 @@ import graph.Vertex;
 import util.GraphLoader;
 
 public class test {
-	static String filename = "data/facebook_1000.txt";
+	static String filename = "data/band_friend_network.gve";
 
 	public static void main(String[] args) {
 		// TODO Auto-generated method stub
 		Graph g = new Graph();
-		System.out.println(g.getEdges().size());
 //		g.printGraph();
 		
 
 		System.out.println("loading...");
-		GraphLoader.loadEdgeListGraph(g, filename);		
+		GraphLoader.loadGraph(g, filename);		
 //		GraphLoader.loadAdjacencyListGraph(g, filename);
 		System.out.println("Graph loaded!");
 		g.printGraph();
 		
-		Graphs.girvanNewman(g, 100);
-		Graphs.setLocationsMaxNode(g);
+//		Graphs.girvanNewman(g, 100);
+//		Graphs.setLocationsMaxNode(g);
 		
 //		g.printGraph();
 		

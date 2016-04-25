@@ -4,6 +4,13 @@ import java.util.HashSet;
 
 import graph.Vertex;
 
+/**
+ * This class is in the GraphLoader class as a temporary location
+ * for graph information.
+ * 
+ * @author jnzastrow
+ *
+ */
 public class TempNode {
 	private Vertex vertex;
 	private HashSet<Integer> neighbors;

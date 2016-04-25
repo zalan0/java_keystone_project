@@ -1,5 +1,11 @@
 package visualization;
 
+/**
+ * Simple class to contain an (x, y) Cartesian coordinate.
+ * 
+ * @author jnzastrow
+ *
+ */
 public class Coordinate {
 	private float x;
 	private float y;

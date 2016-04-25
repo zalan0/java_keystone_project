@@ -49,7 +49,7 @@ public class Edge {
 	}
 	
 	/**
-	 * Returns a set of vertices that difine this edge.
+	 * Returns a set of vertices that define this edge.
 	 */
 	public HashSet<Vertex> getEnds() {
 		return ends;
@@ -93,8 +93,10 @@ public class Edge {
 		return ret;
 	}
 
+	/**
+	 * reset an edge's flow to zero
+	 */
 	public void resetFlow() {
-		// TODO Auto-generated method stub
 		flow = 0;
 	}
 }

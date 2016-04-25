@@ -13,17 +13,16 @@ import visualization.Coordinate;
 
 /**
  * Utility class of methods for graphs.
- * @author zalan0
+ * @author jnzastrow
  *
  * Class containing methods to manipulate graphs.
  */
 public class Graphs {
 	
-//	Graph graph;
-//	
-//	public Graphs(Graph g) {
-//		graph = g;
-//	}
+	private final static float PUSH = 1;
+	private final static float PULL = 1;
+	private final static float INNER_BOUND = 15;
+	private final static float OUTER_BOUND = 25;
 	
 	/**
 	 * Breadth First Search implementation that produces a pairing of nodes
@@ -193,23 +192,22 @@ public class Graphs {
 	}
 	
 	/**
-	 * Method that takes the output from both the shortestRoutesBFS and numberOfShortestPaths
-	 * methods and finds the betweenness or flow for all edges in the graph.  This value is stored
-	 * within the Edge Class.
+	 * Method that takes the output from both the shortestRoutesBFS and 
+	 * numberOfShortestPaths methods and finds the betweenness or flow for all 
+	 * edges in the graph.  This value is stored within the Edge Class.
 	 * 
 	 * @param levels ArrayList of HashSets - output from BFS search
-	 * @param paths a map of nodes and the amount of paths that travel through them - output from
-	 * 			numberOfShortestPaths.
+	 * @param paths a map of nodes and the amount of paths that travel through 
+	 *        them - output from numberOfShortestPaths.
 	 */
 	public static void calculateEdgeFlow
 	(ArrayList<HashSet<Vertex>> levels, HashMap<Vertex, Integer> paths) {
 
 		HashMap<Edge, Double> flowMap = new HashMap<Edge, Double>(); 
 
-		/*
-		 * Iterate back wards through array starting with
-		 *  lowest level.
-		 */
+		// Iterate back wards through array starting with
+		// lowest level.
+		
 		for(int level = levels.size()-1; level > 0; level--) {
 			HashSet<Vertex> currentLevel = levels.get(level);
 			HashSet<Vertex> aboveCurrentLevel = levels.get(level-1);
@@ -291,6 +289,14 @@ public class Graphs {
 		}
 	}
 
+	/**
+	 * Removes the edge that has been shown to be the traveled  by
+	 * calculating betweenness or flow. If there are edges with equal
+	 * flows, the method will return the first one that is found.
+	 * 
+	 * @param graph
+	 * @return The edge with highest betweenness
+	 */
 	public static Edge removeHighestBetweenness(Graph graph) {
 		Iterator<Edge> eIt = graph.getEdges().iterator();
 		Edge highestBetweenness = eIt.next();
@@ -344,10 +350,6 @@ public class Graphs {
 	 */
 	public static void setLocations(Graph graph) {
 		PApplet parent = graph.getParent();
-		final float PUSH = 1;
-		final float PULL = 1;
-		final float INNER_BOUND = 50;
-		final float OUTER_BOUND = 60;
 		
 		// iterate through all vertices
 		HashSet<Vertex> vertices = new HashSet<Vertex>(graph.getVertices().values());
@@ -359,8 +361,7 @@ public class Graphs {
 			while(itJ.hasNext()) {
 				Vertex compared = itJ.next();
 				if(!currentNode.equals(compared)){
-					pushPull(parent, PUSH, PULL, INNER_BOUND, OUTER_BOUND, currentNode, 
-							compared);
+					pushPull(parent, currentNode, compared);
 				}
 			}
 		}
@@ -375,10 +376,7 @@ public class Graphs {
 	 */
 	public static void setLocationsMaxNode(Graph graph) {
 		PApplet parent = graph.getParent();
-		final float PUSH = 1;
-		final float PULL = 1;
-		final float INNER_BOUND = 50;
-		final float OUTER_BOUND = 60;
+		
 		
 		// find most connected node  
 		int maxName = findMaxNode(graph);
@@ -399,16 +397,23 @@ public class Graphs {
 			while(itJ.hasNext()) {
 				Vertex compared = itJ.next();
 				if(!currentNode.equals(compared) && !compared.equals(maxNode)){
-					pushPull(parent, PUSH, PULL, INNER_BOUND, OUTER_BOUND, currentNode, 
-							compared);
+					pushPull(parent, currentNode, compared);
 				}
 			}
 			if(itI.hasNext()) currentNode = itI.next();
 		}
 	}
 
-	private static void pushPull(PApplet parent, final float PUSH, final float PULL, final float INNER_BOUND,
-			final float OUTER_BOUND, Vertex currentNode, Vertex compared) {
+	/**
+	 * Helper method that calculates whether the current point will push or pull the 
+	 * compared point, if it moves it at all.  The new position is then calculated by
+	 * the newPoint() method.
+	 * 
+	 * @param parent  PApplet object that is passed to newPoint()
+	 * @param currentNode
+	 * @param compared
+	 */
+	private static void pushPull(PApplet parent, Vertex currentNode, Vertex compared) {
 		float currentNodeX = currentNode.getX();
 		float currentNodeY = currentNode.getY();
 		float comparedX = compared.getX();
@@ -446,6 +451,13 @@ public class Graphs {
 		}
 	}
 
+	/**
+	 * Finds the node that has the most neighbors in the largest sub-group
+	 * of the graph.
+	 * 
+	 * @param graph
+	 * @return An integer that represents the name of a node.
+	 */
 	private static int findMaxNode(Graph graph) {
 		int maxName = -1;
 		int maxNeighbors = -1;
@@ -467,6 +479,19 @@ public class Graphs {
 		return maxName;
 	}
 	
+	/**
+	 * Helper method that computes a point to move a vertex. It use the other point to move in a 
+	 * straight line either towards or away.
+	 * 
+	 * @param x1 X coordinate for origin point
+	 * @param y1 Y coordinate for origin point
+	 * @param x2 X Coordinate for second point
+	 * @param y2 Y Coordinate for second point
+	 * @param distanceToMove
+	 * @param distanceBetweenPoints
+	 * @param parent PApplet object, used to find height and width of canvas.
+	 * @return a Coordinate object containing the x and y of the points new position.
+	 */
 	private static Coordinate newPoint(float x1, float y1, float x2, float y2, 
 			float distanceToMove, float distanceBetweenPoints, PApplet parent) {
 		
@@ -483,6 +508,12 @@ public class Graphs {
 		return new Coordinate(newX, newY);
 	}
 	
+	/**
+	 * Finds communities within graphs.
+	 * 
+	 * @param graph
+	 * @param iterations Times to run through and separate edges
+	 */
 	public static void girvanNewman(Graph graph, int iterations) {
 		for(int iteration = 0; iteration < iterations; iteration++) {
 			System.out.println("Girvan-Newman iteration: " + iteration);
@@ -492,8 +523,11 @@ public class Graphs {
 		}
 	}
 
+	/**
+	 * Reset each edges' float value to zero.
+	 * @param graph
+	 */
 	private static void resetEdgeFlow(Graph graph) {
-		// TODO Auto-generated method stub
 		Iterator<Edge> it = graph.getEdges().iterator();
 		while(it.hasNext()) {
 			Edge edge = it.next();
@@ -501,20 +535,3 @@ public class Graphs {
 		}
 	}
 }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
