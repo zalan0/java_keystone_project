@@ -19,9 +19,9 @@ import visualization.Coordinate;
  */
 public class Graphs {
 	
-	private final static float PUSH = 1;
+	private final static float PUSH = 2;
 	private final static float PULL = 1;
-	private final static float INNER_BOUND = 15;
+	private final static float INNER_BOUND = 20;
 	private final static float OUTER_BOUND = 25;
 	
 	/**

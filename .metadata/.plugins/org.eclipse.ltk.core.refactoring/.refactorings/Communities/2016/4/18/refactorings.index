@@ -2,3 +2,4 @@
 1461463771661	Rename method 'setLocations'
 1461463844808	Extract method 'pushPull'
 1461533164873	Rename resource 'band_friend_network.adjacency_list'
+1462038145876	Rename resource 'inline_graph'

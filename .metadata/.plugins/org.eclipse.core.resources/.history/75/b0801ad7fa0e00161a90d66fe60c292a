@@ -1,0 +1,95 @@
+package visualization;
+
+import java.util.Iterator;
+
+import graph.Edge;
+import graph.Graph;
+import graph.Graphs;
+import graph.Vertex;
+import processing.core.PApplet;
+import util.GraphLoader;
+
+/**
+ * Runs the visualization of the graph.
+ * @author jnzastrow
+ *
+ * Extends PApplet.  Instantiates a graph and load that graph.  
+ */
+public class GraphVisualize extends PApplet{
+	
+	private Graph graph;
+	private final static String graphFile = 
+			"data/inline_graph"; // graph to load
+	
+	// screen settings
+	private final boolean fullscreen = false;
+	private final int width = 800;
+	private final int height = 600;
+	
+	// render settings
+	private final boolean removeEdges = false;
+	private final boolean runGirvanNewman = true;
+	private final int girvanNewmanIterations = 10;
+	
+	// render variables
+	private boolean pause = false;
+	
+	/**
+	 * Main method to run the applet as an application.
+	 */
+	public static void main(String args[] ) {
+		PApplet.main(new String[] {"visualization.GraphVisualize"});
+	}
+	
+	/**
+	 * Overrides settings method from PApplet
+	 * 
+	 * Sets size of canvas
+	 */
+	public void settings() {
+		if(fullscreen) fullScreen();	// use the entire screen
+		else size(width,height);	// use a specific size of window
+	}
+	
+	/**
+	 * Overrides setup method from PApplet
+	 * 
+	 * Instantiates and loads the graph.
+	 */
+	public void setup() {
+		graph = new Graph(this);
+		GraphLoader.loadGraph(graph, graphFile);
+		if(runGirvanNewman) Graphs.girvanNewman(graph, girvanNewmanIterations);
+	}
+	
+	/**
+	 * draw method from PApplet that continually draws the graph.
+	 */
+	public void draw() {
+		if(!removeEdges) {
+			background(127);
+			Iterator<Edge> e = graph.getEdges().iterator();	// draw edges here
+			while(e.hasNext()) {							// for faster frame-rates
+				Edge edge = e.next();						// and to see all of the
+				edge.draw();								// edges in graph.
+			}
+		}
+		Iterator<Integer> i = graph.getVertexIterator();
+		while(i.hasNext()) {
+			int vName = i.next();
+			Vertex v = graph.getVertex(vName);
+			if(removeEdges) {
+				Iterator<Edge> e = v.getEdges().iterator(); // draw edges here 
+				while(e.hasNext()) {						// to see which edges
+					Edge edge = e.next();					// have been removed
+					edge.draw();							// by girvanNewman()
+				}
+			}
+			v.draw();
+
+		}
+		
+		if(!pause) Graphs.setLocations(graph);
+		if(mousePressed) pause = !pause;
+	}
+}

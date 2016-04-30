@@ -20,7 +20,18 @@ public class GraphVisualize extends PApplet{
 	private Graph graph;
 	private final static String graphFile = 
 			"data/band_friend_network.gve"; // graph to load
-			
+	
+	// screen settings
+	private final boolean fullscreen = false;
+	private final int width = 800;
+	private final int height = 600;
+	
+	// render settings
+	private final boolean removeEdges = false;
+	private final boolean runGirvanNewman = true;
+	private final int girvanNewmanIterations = 35;
+	
+	// render variables
 	private boolean pause = false;
 	
 	/**
@@ -36,8 +47,8 @@ public class GraphVisualize extends PApplet{
 	 * Sets size of canvas
 	 */
 	public void settings() {
-//		fullScreen();	// use the entire screen
-		size(800,600);	// use a specific size of window
+		if(fullscreen) fullScreen();	// use the entire screen
+		else size(width,height);	// use a specific size of window
 	}
 	
 	/**
@@ -47,11 +58,8 @@ public class GraphVisualize extends PApplet{
 	 */
 	public void setup() {
 		graph = new Graph(this);
-		
 		GraphLoader.loadGraph(graph, graphFile);
-		
-		Graphs.girvanNewman(graph, 35);
-		
+		if(runGirvanNewman) Graphs.girvanNewman(graph, girvanNewmanIterations);
 	}
 	
 	/**
@@ -59,20 +67,24 @@ public class GraphVisualize extends PApplet{
 	 */
 	public void draw() {
 		background(127);
-		Iterator<Edge> e = graph.getEdges().iterator();	// draw edges here
-		while(e.hasNext()) {							// for faster frame-rates
-			Edge edge = e.next();						// and to see all of the
-			edge.draw();								// edges in graph.
+		if(!removeEdges) {
+			Iterator<Edge> e = graph.getEdges().iterator();	// draw edges here
+			while(e.hasNext()) {							// for faster frame-rates
+				Edge edge = e.next();						// and to see all of the
+				edge.draw();								// edges in graph.
+			}
 		}
 		Iterator<Integer> i = graph.getVertexIterator();
 		while(i.hasNext()) {
 			int vName = i.next();
 			Vertex v = graph.getVertex(vName);
-//			Iterator<Edge> e = v.getEdges().iterator(); // draw edges here 
-//			while(e.hasNext()) {						// to see which edges
-//				Edge edge = e.next();					// have been removed
-//				edge.draw();							// by girvanNewman()
-//			}
+			if(removeEdges) {
+				Iterator<Edge> e = v.getEdges().iterator(); // draw edges here 
+				while(e.hasNext()) {						// to see which edges
+					Edge edge = e.next();					// have been removed
+					edge.draw();							// by girvanNewman()
+				}
+			}
 			v.draw();
 
 		}
